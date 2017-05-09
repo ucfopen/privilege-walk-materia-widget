@@ -1,0 +1,31 @@
+---
+general:
+  name: Privilege Walk
+  group: Materia
+  height: 600
+  width: 800
+  in_catalog: No
+  is_editable: No
+  is_playable: Yes
+  is_qset_encrypted: Yes
+  is_answer_encrypted: Yes
+  is_storage_enabled: Yes
+  api_version: 2
+files:
+  creator: creator.html
+  player: player.html
+  flash_version: 0
+score:
+  is_scorable: No
+  score_module: PrivilegeWalk
+meta_data:
+  features:
+    - Customizable
+  supported_data:
+    - Custom
+  about: >
+    Student answers yes or no questions as well as
+    providing how strongly they feel on the subject
+  excerpt: >
+    Student answers yes or no questions as well as
+    providing how strongly they feel on the subject

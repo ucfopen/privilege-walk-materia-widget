@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="en">
+	<head>
+		<title>Privilege Walk</title>
+		<meta charset="utf-8"/>
+
+		<!-- STYLESHEETS -->
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+		<link rel="stylesheet" type="text/css" href="player.css">
+
+		<!-- REQUIRED MATERIA JAVASCRIPT -->
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+		<script src="materia.enginecore.js"></script>
+		<script src="materia.score.js"></script>
+
+		<!-- ANGULAR MATERIAL DEPENDENCIES -->
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+
+		<!-- ANGULAR MATERIAL -->
+		<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+
+		<!-- MAIN WIDGET SCRIPT -->
+		<script src="player.js"></script>
+
+	</head>
+	<body ng-app="PrivilegeWalkEngine" ng-controller="PrivilegeWalkEngineCtrl" ng-cloak>
+		<md-content id="container">
+			<md-toolbar>
+				<div class="md-toolbar-tools">
+					<h2>{{instance.name}}</h2>
+				</div>
+			</md-toolbar>
+			<section ng-if="inProgress">
+				<md-card ng-repeat="question in qset.items" class="md-whiteframe-3dp card">
+
+					<md-card-title>
+						<span class="md-headline">{{question.questions[0].text}}</span>
+					</md-card-title>
+
+					<div layout>
+					<md-card-actions layout layout-align="start start" class="radio-choice">
+						<md-radio-group ng-model="binaryResponses[$index]">
+							<md-radio-button value="1">Yes</md-radio-button>
+							<md-radio-button value="0">No</md-radio-button>
+						</md-radio-group>
+					</md-card-actions>
+
+					<md-card-actions flex="90" layout="column" ng-show=" question.options.slider=='true' ">
+						<div layout layout-align="center center">
+							<div layout layout-align="center center">
+								<span class="md-body-1">{{question.options.min}}</span>
+							</div>
+							<md-slider flex="80" step="1" min="0" max="5" md-discrete="true" ng-model="sliderResponses[$index]" aria-label="slider">
+							</md-slider>
+							<div layout layout-align="center center">
+								<span class="md-body-1">{{question.options.max}}</span>
+							</div>
+						</div>
+						<div layout layout-align="center center">
+							{{question.options.rangeQuestion}}
+						</div>
+					</md-card-actions>
+
+				</div>
+				</md-card>
+
+				<section layout layout-align="center center">
+					<md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
+				</section>
+			</section>
+		</md-content>
+	</body>
+</html>

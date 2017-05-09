@@ -1,0 +1,96 @@
+/* Creator CSS */
+
+#container {
+	background-color: #F3F3F3;
+	height: 100%;
+	overflow: hidden;
+
+	md-toolbar {
+		position: fixed;
+		.md-toolbar-tools {
+			max-height: 64px;
+			height: 64px;
+
+			.widget-title {
+				margin-top: 45px;
+
+				#widget-title-label {
+					color: rgba(255, 255, 255, 0.85);
+				}
+			}
+		}
+	}
+
+	md-input-container {
+		margin: 5px;
+	}
+
+	#content {
+		height: 100%;
+		padding-top: 64px;
+		min-width: 700px;
+
+		#card-container {
+			max-height: 100%;
+			min-width: 700px;
+			overflow: scroll;
+
+			.card {
+				margin: 20px;
+				padding: 5px 10px;
+
+				.card-left {
+					border-right: 1px solid rgba(0,0,0,0.1);
+					padding-right: 10px;
+				}
+
+				.card-right {
+					padding-left: 10px;
+					position: relative;
+
+					.delete {
+						position: absolute;
+						right: 0;
+						cursor: pointer;
+						opacity: 0.5;
+						border: none;
+						background-color: #fff;
+						outline: none;
+					}
+				}
+
+				md-input-container {
+					margin: 25px 5px 15px;
+
+					.error {
+						border-color: #FF0000;
+					}
+
+					.md-errors-spacer {
+						min-height: 0;
+					}
+				}
+			}
+
+			button.md-button.add-question {
+				padding: 0 10px;
+				margin-bottom: 20px;
+			}
+			button.md-button.add-range {
+				padding: 0 10px;
+				margin-bottom: 20px;
+				max-width: 100px;
+			}
+			button.disabled {
+				background-color: rgba(0,0,0,0.12);
+				color: rgba(0,0,0,0.26) !important;
+				cursor: default;
+				box-shadow: none;
+			}
+		}
+	}
+	.highlight {
+		background-color : #FFFFCC;
+	}
+}
+

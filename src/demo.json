@@ -1,0 +1,76 @@
+{
+	"name": "Privilege Walk",
+	"qset": {
+		"version": 1,
+		"data": {
+			"items": [
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "MC",
+					"options": {
+						"min": "Not Strongly",
+						"max": "Very Strongly",
+						"rangeQuestion": "How strongly do you feel about this?",
+						"slider": "true"
+					},
+					"questions": [
+						{
+							"text": "Do you think this is true?"
+						}
+					],
+					"answers": [
+						{
+							"text": "[No Answer]",
+							"value": 0
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "MC",
+					"options": {
+						"min": "Not Strongly",
+						"max": "Very Strongly",
+						"rangeQuestion": "How strongly do you feel about this?",
+						"slider": "true"
+					},
+					"questions": [
+						{
+							"text": "Do you think this is right?"
+						}
+					],
+					"answers": [
+						{
+							"text": "[No Answer]",
+							"value": 0
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "MC",
+					"options": {
+						"min": "Not Strongly",
+						"max": "Very Strongly",
+						"rangeQuestion": "How strongly do you feel about this?",
+						"slider": "true"
+					},
+					"questions": [
+						{
+							"text": "Do you think this is justified?"
+						}
+					],
+					"answers": [
+						{
+							"text": "[No Answer]",
+							"value": 0
+						}
+					]
+				}
+			]
+		}
+	}
+}
