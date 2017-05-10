@@ -57,28 +57,24 @@
 									ng-model="card.question"
 									ng-class="{'highlight': card.question == 'Question '+thisIndex}">
 							</md-input-container>
-							<md-card-actions flex="90" layout="column" ng-show=" card.slider=='true' ">
-								<div layout layout-align="center center">
-									<div layout layout-align="center center">
-										<md-input-container>
-											<label>Minimum</label>
-											<input ng-model="card.min">
-										</md-input-container>
-									</div>
-									<md-slider flex="80" step="1" min="0" max="5" md-discrete="true" ng-model="sliderResponses[$index]" aria-label="slider">
-									</md-slider>
-									<md-input-container>
-										<label>Maximum</label>
-										<input ng-model="card.max">
-									</md-input-container>
-								</div>
-								<md-input-container>
-									<label>Range Label</label>
-									<input ng-model="card.rangeQuestion" placeholder="How do strongly do you feel about this?">
-								</md-input-container>
+
+							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.isRange=='false'">
+								<md-radio-group layout="row" ng-model="responses[$index]">
+									<md-radio-button value="0">Yes</md-radio-button>
+									<md-radio-button value="1">No</md-radio-button>
+								</md-radio-group>
 							</md-card-actions>
-							<md-button class="md-accent md-raised add-range" ng-click="addRange($index)" ng-show="card.slider=='false'">
-								Add Range
+
+							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.isRange=='true'">
+								<md-radio-group layout="row" ng-model="responses[$index]">
+									<md-radio-button ng-repeat="response in rangeResponseOptions" ng-value="response.value">
+										{{ response.text }}
+									</md-radio-button>
+								</md-radio-group>
+							</md-card-actions>
+
+							<md-button class="md-accent md-raised toggle-response" ng-click="toggleRange($index)">
+								Toggle Response Type
 							</md-button>
 						</div>
 					</md-card>

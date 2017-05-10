@@ -9,10 +9,7 @@
 					"id": null,
 					"type": "MC",
 					"options": {
-						"min": "Not Strongly",
-						"max": "Very Strongly",
-						"rangeQuestion": "How strongly do you feel about this?",
-						"slider": "true"
+						"isRange": "false"
 					},
 					"questions": [
 						{
@@ -31,10 +28,7 @@
 					"id": null,
 					"type": "MC",
 					"options": {
-						"min": "Not Strongly",
-						"max": "Very Strongly",
-						"rangeQuestion": "How strongly do you feel about this?",
-						"slider": "true"
+						"isRange": "true"
 					},
 					"questions": [
 						{
@@ -53,10 +47,7 @@
 					"id": null,
 					"type": "MC",
 					"options": {
-						"min": "Not Strongly",
-						"max": "Very Strongly",
-						"rangeQuestion": "How strongly do you feel about this?",
-						"slider": "true"
+						"isRange": "false"
 					},
 					"questions": [
 						{

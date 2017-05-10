@@ -19,7 +19,14 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 
 	$scope.title = "My Privilege Walk Widget"
 
-	$scope.data = [[],[]]
+	$scope.rangeResponseOptions = {
+		0: {text:'Yes', value: 0}
+		1: {text:'Often', value: 1}
+		2: {text:'Rarely', value: 2}
+		3: {text:'Never', value: 3}
+	}
+
+	$scope.data = []
 
 	$scope.fillColor = 'rgba(255,64,129, 0.5)'
 
@@ -38,10 +45,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			for item in qset.items
 				$scope.cards.push
 					question: item.questions[0].text
-					min: item.options.min
-					max: item.options.max
-					rangeQuestion: item.options.rangeQuestion
-					slider: item.options.slider
+					isRange: item.options.isRange
 
 				questionCount++
 
@@ -52,8 +56,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 
 	populateData = ->
 		for card in $scope.cards
-			$scope.data[0].push 0
-			$scope.data[1].push 0
+			$scope.data.push 0
 
 		$scope.invalid = false
 
@@ -61,24 +64,22 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		questionCount++
 		$scope.cards.push {
 			'question': 'Question '+questionCount
-			'min': 'Not Strongly'
-			'max': 'Very Strongly'
-			'rangeQuestion': 'How strongly do you feel about this?'
-			'slider': 'false'
+			'isRange': 'false'
 		}
-		$scope.data[0].push 0
-		$scope.data[1].push 0
+		$scope.data.push 0
 
-	$scope.addRange = (index) ->
-		$scope.cards[index].slider = 'true'
+	$scope.toggleRange = (index) ->
+		if $scope.cards[index].isRange == 'false'
+			$scope.cards[index].isRange = 'true'
+		else
+			$scope.cards[index].isRange = 'false'
 
 	$scope.deleteQuestion = (index) ->
 		if $scope.cards.length <= 1
 			$scope.showToast("Must have at least one question.")
 			return
 		$scope.cards.splice index, 1
-		$scope.data[0].splice index, 1
-		$scope.data[1].splice index, 1
+		$scope.data.splice index, 1
 
 	$scope.showToast = (message) ->
 		$mdToast.show(
@@ -102,7 +103,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		$scope.invalid = false
 
 		for card in $scope.cards
-			if !card.question or !card.min or !card.max
+			if !card.question
 				$scope.invalid = true
 				return false
 		return true
@@ -111,10 +112,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		for i in [0...items.length]
 			$scope.cards.push
 				question: items[i].questions[0].text
-				min: items[i].options.min
-				max: items[i].options.max
-				rangeQuestion: items[i].options.rangeQuestion
-				slider: items[i].options.slider
+				isRange: items[i].options.isRange
 
 	Materia.CreatorCore.start $scope
 
@@ -136,19 +134,13 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 
 	processQsetItem: (item, index) ->
 		question = $sanitize item.question
-		min = $sanitize item.min
-		max = $sanitize item.max
-		rangeQuestion = $sanitize item.rangeQuestion
-		slider = $sanitize item.slider
+		isRange = $sanitize item.isRange
 
 		materiaType: "question"
 		id: null
 		type: 'MC'
 		options: {
-			min: min
-			max: max
-			rangeQuestion: rangeQuestion
-			slider: slider
+			isRange: isRange
 		}
 		questions: [{ text: question }]
 		answers: [

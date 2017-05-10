@@ -32,44 +32,39 @@
 					<h2>{{instance.name}}</h2>
 				</div>
 			</md-toolbar>
-			<section ng-if="inProgress">
-				<md-card ng-repeat="question in qset.items" class="md-whiteframe-3dp card">
 
-					<md-card-title>
-						<span class="md-headline">{{question.questions[0].text}}</span>
-					</md-card-title>
+			<div layout-gt-sm="row" layout="column" id="content">
+				<div flex="55" id="card-container">
+					<md-card class="md-whiteframe-3dp card"
+						ng-repeat="question in qset.items">
+						<div class="card-right" layout="column">
 
-					<div layout>
-					<md-card-actions layout layout-align="start start" class="radio-choice">
-						<md-radio-group ng-model="binaryResponses[$index]">
-							<md-radio-button value="1">Yes</md-radio-button>
-							<md-radio-button value="0">No</md-radio-button>
-						</md-radio-group>
-					</md-card-actions>
+							<md-card-title>
+								<span class="md-headline">{{question.questions[0].text}}</span>
+							</md-card-title>
 
-					<md-card-actions flex="90" layout="column" ng-show=" question.options.slider=='true' ">
-						<div layout layout-align="center center">
-							<div layout layout-align="center center">
-								<span class="md-body-1">{{question.options.min}}</span>
-							</div>
-							<md-slider flex="80" step="1" min="0" max="5" md-discrete="true" ng-model="sliderResponses[$index]" aria-label="slider">
-							</md-slider>
-							<div layout layout-align="center center">
-								<span class="md-body-1">{{question.options.max}}</span>
-							</div>
+							<md-card-actions layout layout-align="start start" ng-show="question.options.isRange=='false'">
+								<md-radio-group layout="row" ng-model="responses[$index]" class="radio-spacing">
+									<md-radio-button ng-value="0">Yes</md-radio-button>
+									<md-radio-button ng-value="1">No</md-radio-button>
+								</md-radio-group>
+							</md-card-actions>
+
+							<md-card-actions layout layout-align="start start" ng-show="question.options.isRange=='true'">
+								<md-radio-group layout="row" ng-model="responses[$index]" class="radio-spacing">
+									<md-radio-button ng-repeat="response in rangeResponseOptions" ng-value="response.value">
+										{{ response.text }}
+									</md-radio-button>
+								</md-radio-group>
+							</md-card-actions>
 						</div>
-						<div layout layout-align="center center">
-							{{question.options.rangeQuestion}}
-						</div>
-					</md-card-actions>
-
+					</md-card>
+					<div layout layout-align="center center">
+						<md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
+					</div>
 				</div>
-				</md-card>
+			</div>
 
-				<section layout layout-align="center center">
-					<md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
-				</section>
-			</section>
 		</md-content>
 	</body>
 </html>
