@@ -17,8 +17,6 @@ PrivilegeWalk.config ($mdThemingProvider) ->
 
 PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize, $compile, Resource) ->
 
-	$scope.title = "My Privilege Walk Widget"
-
 	$scope.rangeResponseOptions = {
 		0: {text:'Yes', value: 0}
 		1: {text:'Often', value: 1}
@@ -26,10 +24,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		3: {text:'Never', value: 3}
 	}
 
-	$scope.data = []
-
-	$scope.fillColor = 'rgba(255,64,129, 0.5)'
-
+	$scope.title = "My Privilege Walk Widget"
 	$scope.cards = []
 
 	questionCount = 0
@@ -49,16 +44,8 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 
 				questionCount++
 
-			populateData()
-
 	setup = ->
 		$scope.addQuestion()
-
-	populateData = ->
-		for card in $scope.cards
-			$scope.data.push 0
-
-		$scope.invalid = false
 
 	$scope.addQuestion = ->
 		questionCount++
@@ -66,7 +53,6 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			'question': 'Question '+questionCount
 			'isRange': 'false'
 		}
-		$scope.data.push 0
 
 	$scope.toggleRange = (index) ->
 		if $scope.cards[index].isRange == 'false'
@@ -79,7 +65,6 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			$scope.showToast("Must have at least one question.")
 			return
 		$scope.cards.splice index, 1
-		$scope.data.splice index, 1
 
 	$scope.showToast = (message) ->
 		$mdToast.show(
@@ -93,8 +78,8 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		_isValid = $scope.validation()
 
 		if _isValid
-			qset = Resource.buildQset $sanitize($scope.title), $scope.cards
-			if qset then Materia.CreatorCore.save $sanitize($scope.title), qset
+			qset = Resource.buildQset $scope.title, $scope.cards
+			if qset then Materia.CreatorCore.save $scope.title, qset
 		else
 			Materia.CreatorCore.cancelSave "Please make sure every question is complete"
 			return false

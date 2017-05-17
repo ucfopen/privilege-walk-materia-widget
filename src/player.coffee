@@ -15,6 +15,7 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 	$scope.qset = null
 	$scope.instance = null
 	$scope.responses = []
+	$scope.privilege = 0
 
 	$scope.showToast = (message) ->
 		$mdToast.show(
@@ -33,13 +34,34 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 
 	$scope.start = (instance, qset, version) ->
 		$scope.instance = instance
-		console.log $scope.instance
 		$scope.qset = qset
+		$scope.privilege = 0
+		$scope.completed = false
 		$scope.$apply()
 
+	createStorageTable = (tableName, columns) ->
+		args = columns
+		args.splice(0, 0, tableName)
+		Materia.Storage.Manager.addTable.apply(this, args)
+
+	insertStorageRow = (tableName, values) ->
+		args = values
+		args.splice(0, 0, tableName)
+		Materia.Storage.Manager.insert.apply(this, args)
+
 	$scope.submit = ->
-		console.log $scope.instance
 		if $scope.responses.length < $scope.qset.items.length
 			$scope.showToast "Must complete all questions."
+		else
+			try
+				$scope.privilege = $scope.responses.reduce(((total, current) ->
+					total + current), 0)
+				$scope.completed = true
+				createStorageTable("PrivilegeTable", ["Privilege"])
+				insertStorageRow("PrivilegeTable", [$scope.privilege])
+				Materia.Score.submitFinalScoreFromClient(0,'',100)
+			catch e
+				alert 'Unable to save storage data'
+		return
 
 	Materia.Engine.start($scope)

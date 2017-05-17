@@ -23,7 +23,7 @@ var Server = require('karma').Server;
 
 var configs = require('../../backend/config.json');
 
-var widget = sanitize("privilege-walk");
+var widget = sanitize("privilege-walk-widget");
 // When compiling this may be entered as an argument.
 var minify = argv.minify;
 var mangle = argv.mangle;
@@ -673,7 +673,9 @@ exports["install"] = function(callback)
 var fullExport = function(callback)
 {
 	var widgetPackagePostFix = Date.now();
-
+	console.log("word")
+	console.log(widget)
+	console.log(__dirname.slice(0, -widget.length))
 	var totalCommand = "cd " + __dirname.slice(0, -widget.length) +
 	" && find " + configs.materia_docker_location + "/app/fuel/app/tmp/widget_packages -name '" + widget + "*.wigt' -delete" +
 	" && cd " + configs.materia_docker_location +

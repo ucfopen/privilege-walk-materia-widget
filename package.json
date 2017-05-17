@@ -43,11 +43,5 @@
     "karma-phantomjs-launcher": "^1.0.2",
     "protractor": "^3.2.2"
   },
-  "scripts": {
-    "pretest": "gulp build-readable",
-    "test": "karma start ./karma.conf.js",
-    "pretest-full": "gulp build-readable",
-    "test-full": "karma start ./karma-full.conf.js"
-  },
   "author": "New Media"
 }
