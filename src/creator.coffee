@@ -17,12 +17,26 @@ PrivilegeWalk.config ($mdThemingProvider) ->
 
 PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize, $compile, Resource) ->
 
-	$scope.rangeResponseOptions = {
-		0: {text:'Yes', value: 0}
-		1: {text:'Often', value: 1}
-		2: {text:'Rarely', value: 2}
-		3: {text:'Never', value: 3}
+	$scope.rangeOptions = {
+		0: {text:'Very Often', value: 1}
+		1: {text:'Often', value: 2}
+		2: {text:'Sometimes', value: 3}
+		3: {text:'Rarely', value: 4}
+		4: {text:'Never', value: 5}
 	}
+
+	$scope.sizes = [
+		"small (12-inch)",
+		"medium (14-inch)",
+		"large (16-inch)",
+		"insane (42-inch)",
+	]
+
+	$scope.questionTypes = [
+		"Preset: Yes / No",
+		"Preset: Scale",
+		"Custom"
+	]
 
 	$scope.title = "My Privilege Walk Widget"
 	$scope.cards = []
@@ -34,7 +48,6 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			setup()
 
 	$scope.initExistingWidget = (title,widget,qset) ->
-
 		$scope.$apply ->
 			$scope.title = title
 			for item in qset.items
@@ -49,16 +62,20 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 
 	$scope.addQuestion = ->
 		questionCount++
+		rangeOptions = JSON.parse(JSON.stringify($scope.rangeOptions))
 		$scope.cards.push {
 			'question': 'Question '+questionCount
-			'isRange': 'false'
+			'questionType': 0
+			'customOptions': {
+				'options': rangeOptions
+				'dropdown': false
+			}
 		}
 
-	$scope.toggleRange = (index) ->
-		if $scope.cards[index].isRange == 'false'
-			$scope.cards[index].isRange = 'true'
-		else
-			$scope.cards[index].isRange = 'false'
+	$scope.changeQuestionType = (index) ->
+		prev = $scope.cards[index].questionType
+		numTypes = $scope.questionTypes.length
+		$scope.cards[index].questionType = (prev + 1) % numTypes
 
 	$scope.deleteQuestion = (index) ->
 		if $scope.cards.length <= 1
@@ -97,7 +114,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		for i in [0...items.length]
 			$scope.cards.push
 				question: items[i].questions[0].text
-				isRange: items[i].options.isRange
+				questionType: items[i].options.questionType
 
 	Materia.CreatorCore.start $scope
 
@@ -119,13 +136,13 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 
 	processQsetItem: (item, index) ->
 		question = $sanitize item.question
-		isRange = $sanitize item.isRange
+		questionType = $sanitize item.questionType
 
 		materiaType: "question"
 		id: null
 		type: 'MC'
 		options: {
-			isRange: isRange
+			questionType: questionType
 		}
 		questions: [{ text: question }]
 		answers: [

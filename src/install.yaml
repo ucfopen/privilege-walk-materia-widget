@@ -5,7 +5,7 @@ general:
   height: 600
   width: 800
   in_catalog: No
-  is_editable: No
+  is_editable: Yes
   is_playable: Yes
   is_qset_encrypted: Yes
   is_answer_encrypted: Yes
@@ -16,7 +16,7 @@ files:
   player: player.html
   flash_version: 0
 score:
-  is_scorable: No
+  is_scorable: Yes
   score_module: PrivilegeWalk
 meta_data:
   features:

@@ -46,12 +46,11 @@
 				<div flex="55" id="card-container">
 
 					<md-card class="md-whiteframe-3dp card"
-						ng-repeat="card in cards"
-						layout="row"
-						ng-init="thisIndex = $index + 1">
+						ng-repeat="(cardIndex, card) in cards"
+						layout="row">
 
 						<div class="card-right" layout="column" flex>
-							<button class="delete" ng-click="deleteQuestion($index)">×</button>
+							<button class="delete" ng-click="deleteQuestion(cardIndex)">×</button>
 							<md-input-container class="md-block">
 								<label>Question</label>
 								<input
@@ -59,24 +58,70 @@
 									class="highlight">
 							</md-input-container>
 
-							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.isRange=='false'">
-								<md-radio-group layout="row" ng-model="responses[$index]">
+							<md-input-container>
+								<label>Answer Type</label>
+								<md-select ng-model="card.questionType">
+									<md-option
+										ng-repeat="questionType in questionTypes"
+										value="{{$index}}">
+										{{questionType}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+
+							<!-- Yes / No Preset -->
+							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.questionType==0">
+								<md-radio-group layout="row" ng-model="responses[cardIndex]">
 									<md-radio-button value="0" ng-disabled="true">Yes</md-radio-button>
 									<md-radio-button value="1" ng-disabled="true">No</md-radio-button>
 								</md-radio-group>
 							</md-card-actions>
 
-							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.isRange=='true'">
-								<md-radio-group layout="row" ng-model="responses[$index]">
-									<md-radio-button ng-repeat="response in rangeResponseOptions" ng-value="response.value" ng-disabled="true">
-										{{ response.text }}
-									</md-radio-button>
-								</md-radio-group>
+							<!-- Scale Preset -->
+							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.questionType==1">
+								<div layout="column" >
+									<div layout="row" ng-repeat="option in rangeOptions">
+											<md-input-container aria-label="option {{$index + 1}}" ng-value="option.value" ng-disabled="true">
+												<label>Option {{$index + 1}}</label>
+												<input type="text" ng-model="option.text" ng-disabled="true"/>
+											</md-input-container>
+
+											<md-input-container aria-label="option {{$index + 1}}" ng-value="option.value" ng-disabled="true">
+												<label>Option {{$index + 1}} Value</label>
+												<input type="number" ng-model="option.value" ng-disabled="true"/>
+											</md-input-container>
+									</div>
+								</div>
 							</md-card-actions>
 
-							<md-button class="md-accent md-raised toggle-response" ng-click="toggleRange($index)">
-								Toggle Response Type
-							</md-button>
+							<!-- Custom -->
+							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.questionType==2">
+								<div layout="column">
+									<div layout="row" ng-repeat="option in card.customOptions.options">
+										<md-input-container aria-label="option {{$index + 1}}" ng-value="option.value" ng-disabled="true">
+											<label>Option {{$index + 1}}</label>
+											<input type="text" ng-model="option.text" required="true"/>
+										</md-input-container>
+
+										<md-input-container aria-label="option {{$index + 1}}" ng-value="option.value" ng-disabled="true">
+											<label>Option {{$index + 1}} Value</label>
+											<input type="number" ng-model="option.value" required="true"/>
+										</md-input-container>
+
+										<md-button class="md-accent md-raised toggle-option" ng-click="removeQuestion($index)">
+											Remove
+										</md-button>
+									</div>
+									<md-checkbox ng-model="data.cb1" aria-label="Checkbox 1">
+										Display as Dropdown: {{ data.cb1 }}
+									</md-checkbox>
+									<md-button class="md-accent md-raised toggle-option" ng-click="changeQuestionType(cardIndex)">
+										Add Option
+									</md-button>
+								</div>
+							</md-card-actions>
+
+							{{card}}
 						</div>
 					</md-card>
 
