@@ -28,8 +28,7 @@ class Score_Modules_PrivilegeWalk extends Score_Module
 
 	public function check_answer($log)
 	{
-		error_log("\n\n\n\nchecking check_answer\n\n\na");
-		return 1;
+		return 100;
 	}
 
 }

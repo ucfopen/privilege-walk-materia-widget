@@ -8,7 +8,7 @@ Widget: Privilege Walk
 ###
 
 # Create an angular module to house our controller
-PrivilegeWalk = angular.module 'PrivilegeWalkCreator', ['ngMaterial', 'ngSanitize']
+PrivilegeWalk = angular.module 'PrivilegeWalkCreator', ['ngMaterial', 'ngSanitize', 'angular-sortable-view']
 
 PrivilegeWalk.config ($mdThemingProvider) ->
 		$mdThemingProvider.theme('toolbar-dark', 'default')
@@ -17,25 +17,27 @@ PrivilegeWalk.config ($mdThemingProvider) ->
 
 PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize, $compile, Resource) ->
 
-	$scope.rangeOptions = {
-		0: {text:'Very Often', value: 1}
-		1: {text:'Often', value: 2}
-		2: {text:'Sometimes', value: 3}
-		3: {text:'Rarely', value: 4}
-		4: {text:'Never', value: 5}
-	}
-
-	$scope.sizes = [
-		"small (12-inch)",
-		"medium (14-inch)",
-		"large (16-inch)",
-		"insane (42-inch)",
+	$scope.rangeOptions = [
+		{text:'Very Often', value: 1}
+		{text:'Often', value: 2}
+		{text:'Sometimes', value: 3}
+		{text:'Rarely', value: 4}
+		{text:'Never', value: 5}
 	]
 
-	$scope.questionTypes = [
-		"Preset: Yes / No",
-		"Preset: Scale",
-		"Custom"
+	$scope.yesNo = [
+		{text:'Yes', value: 5, id: ''}
+		{text:'No', value: 1, id: ''}
+	]
+
+	$scope.questionTypes =
+		'0': "Preset: Yes / No"
+		'1': "Preset: Scale"
+		'2': "Custom"
+
+	$scope.displayStyles = [
+		{text:'Horizontal Scale', value: '0'}
+		{text:'Dropdown Menu', value: '1'}
 	]
 
 	$scope.title = "My Privilege Walk Widget"
@@ -48,13 +50,17 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			setup()
 
 	$scope.initExistingWidget = (title,widget,qset) ->
+		console.log qset
 		$scope.$apply ->
 			$scope.title = title
 			for item in qset.items
 				$scope.cards.push
 					question: item.questions[0].text
-					isRange: item.options.isRange
-
+					questionType: item.options.questionType
+					answers: item.answers
+					style: item.options.style
+					reversed: item.options.reversed == 'true'
+				console.log $scope.cards
 				questionCount++
 
 	setup = ->
@@ -62,33 +68,65 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 
 	$scope.addQuestion = ->
 		questionCount++
-		rangeOptions = JSON.parse(JSON.stringify($scope.rangeOptions))
-		$scope.cards.push {
-			'question': 'Question '+questionCount
-			'questionType': 0
-			'customOptions': {
-				'options': rangeOptions
-				'dropdown': false
-			}
-		}
-
-	$scope.changeQuestionType = (index) ->
-		prev = $scope.cards[index].questionType
-		numTypes = $scope.questionTypes.length
-		$scope.cards[index].questionType = (prev + 1) % numTypes
+		$scope.cards.push
+			question: 'Question '+questionCount
+			answers: $scope.rangeOptions
+			questionType: '1'
+			style: '0'
+			reversed: false
 
 	$scope.deleteQuestion = (index) ->
-		if $scope.cards.length <= 1
-			$scope.showToast("Must have at least one question.")
-			return
 		$scope.cards.splice index, 1
+		questionCount--
+		if $scope.cards.length == 0
+			$scope.showToast("Must have at least one question.")
+			$scope.addQuestion()
+			return
 
-	$scope.showToast = (message) ->
+	$scope.addOption = (cardIndex) ->
+		style = $scope.cards[cardIndex].style
+		len = $scope.cards[cardIndex].answers.length
+		if (style == '0' && len >= 5)
+			$scope.showToast "Can only have 5 options per scale. Set Display Style to Dropdown to add more.", 10000
+			return
+		$scope.cards[cardIndex].answers.push {
+			text:'', value: 1, id: ''
+		}
+
+	$scope.removeOption = (cardIndex, optionIndex) ->
+		$scope.cards[cardIndex].answers.splice optionIndex, 1
+		if $scope.cards[cardIndex].answers.length == 0
+			$scope.showToast("Must have at least one option.")
+			$scope.addOption(cardIndex)
+
+	$scope.updateAnswerType = (cardIndex) ->
+		$scope.cards[cardIndex].style = '0'
+		switch ($scope.cards[cardIndex].questionType)
+			when '0'
+				$scope.cards[cardIndex].answers = $scope.yesNo
+			when '1'
+				$scope.cards[cardIndex].answers = $scope.rangeOptions
+			when '2'
+				custom = JSON.parse(JSON.stringify($scope.rangeOptions))
+				$scope.cards[cardIndex].answers = custom
+
+	$scope.reverseValues = (cardIndex) ->
+		answers = $scope.cards[cardIndex].answers
+		reversedArray = []
+		for i in [0..answers.length-1]
+			reversedArray.push(
+				text: answers[i].text,
+				value: answers[answers.length-i-1].value
+				id: ''
+			)
+		$scope.cards[cardIndex].answers = reversedArray
+
+	$scope.showToast = (message, delay=3000) ->
 		$mdToast.show(
 			$mdToast.simple()
 				.textContent(message)
-				.position('bottom right')
-				.hideDelay(3000)
+				.position('top')
+				.hideDelay(delay)
 		)
 
 	$scope.onSaveClicked = ->
@@ -111,10 +149,17 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		return true
 
 	$scope.onQuestionImportComplete = (items) ->
-		for i in [0...items.length]
+		for item in qset.items
 			$scope.cards.push
-				question: items[i].questions[0].text
-				questionType: items[i].options.questionType
+				question: item.questions[0].text
+				questionType: item.options.questionType
+				answers: item.answers
+				style: item.options.style
+				reversed: item.options.reversed == '1'
+			console.log $scope.cards
+			questionCount++
+
+	$scope.onSaveComplete = (title, widget, qset, version) -> true
 
 	Materia.CreatorCore.start $scope
 
@@ -132,20 +177,26 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 			if item then qsetItems.push item
 
 		qset.items = qsetItems
+		console.log "saved qset", qset
 		return qset
 
-	processQsetItem: (item, index) ->
+	processQsetItem: (item) ->
 		question = $sanitize item.question
 		questionType = $sanitize item.questionType
+		style = $sanitize item.style
+		reversed = $sanitize item.reversed
+
+		# clean out previously generated IDs
+		for answer in item.answers
+			answer.id = ''
 
 		materiaType: "question"
 		id: null
 		type: 'MC'
 		options: {
 			questionType: questionType
+			style: style
+			reversed: reversed
 		}
 		questions: [{ text: question }]
-		answers: [
-			text: '[No Answer]'
-			value: 0
-		]
+		answers: item.answers

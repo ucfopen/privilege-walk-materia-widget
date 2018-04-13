@@ -43,23 +43,33 @@
 						ng-repeat="question in qset.items">
 						<div class="card-right" layout="column">
 
-							<md-card-title>
+							<md-card-title class="card-title">
 								<span class="md-headline">{{question.questions[0].text}}</span>
 							</md-card-title>
 
-							<md-card-actions layout layout-align="start start" ng-show="question.options.isRange=='false'">
+							<!-- Scale Style -->
+							<md-card-actions layout layout-align="start start" ng-show="question.options.style=='0'">
 								<md-radio-group layout="row" ng-model="responses[$index]" class="radio-spacing">
-									<md-radio-button ng-value="0">Yes</md-radio-button>
-									<md-radio-button ng-value="1">No</md-radio-button>
+									<md-radio-button
+										ng-repeat="answer in question.answers"
+										value={{$index}}>
+										{{answer.text}}
+									</md-radio-button>
 								</md-radio-group>
 							</md-card-actions>
 
-							<md-card-actions layout layout-align="start start" ng-show="question.options.isRange=='true'">
-								<md-radio-group layout="row" ng-model="responses[$index]" class="radio-spacing">
-									<md-radio-button ng-repeat="response in rangeResponseOptions" ng-value="response.value">
-										{{ response.text }}
-									</md-radio-button>
-								</md-radio-group>
+							<!-- Dropdown Style -->
+							<md-card-actions layout layout-align="start start" ng-show="question.options.style=='1'">
+								<md-input-container layout="row" class="dropdown-answer">
+									<span class="pre-answer">Answer:</span>
+									<md-select ng-model="responses[$index]" aria-label="Answer">
+										<md-option
+											ng-repeat="answer in question.answers"
+											value={{$index}}>
+											{{answer.text}}
+										</md-option>
+									</md-select>
+								</md-input-container>
 							</md-card-actions>
 						</div>
 					</md-card>

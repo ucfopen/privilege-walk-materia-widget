@@ -1,0 +1,48 @@
+#container {
+	position: relative;
+	height: 100%;
+	background-color: #F3F3F3;
+}
+
+.md-toolbar-tools h2 {
+	margin-left: 5px;
+}
+
+.card {
+	margin: 20px;
+
+	.md-headline {
+		font-weight: bold;
+		font-size: 20px;
+	}
+}
+
+h1.md-headline {
+	position: relative;
+	z-index: 0;
+}
+
+.radio-spacing {
+	margin: 10px;
+}
+
+#score-card.card {
+	width: 50%;
+	margin: 20px auto;
+	background-color: #6158ff;
+	color: white;
+	text-align: center;
+
+	.card-center {
+		align-self: center;
+	}
+
+	.md-headline {
+		font-weight: bold;
+		font-size: 26px;
+	}
+
+	#score-value {
+		font-size: 60px;
+	}
+}

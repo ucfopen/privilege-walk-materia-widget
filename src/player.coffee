@@ -10,8 +10,6 @@ Widget: Privilege Walk
 PrivilegeWalk = angular.module 'PrivilegeWalkEngine', ['ngMaterial']
 
 PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
-	$scope.inProgress = true
-
 	$scope.qset = null
 	$scope.instance = null
 	$scope.responses = []
@@ -25,15 +23,9 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 				.hideDelay(3000)
 		)
 
-	$scope.rangeResponseOptions = {
-		0: {text:'Yes', value: 0}
-		1: {text:'Often', value: 1}
-		2: {text:'Rarely', value: 2}
-		3: {text:'Never', value: 3}
-	}
-
 	$scope.start = (instance, qset, version) ->
 		$scope.instance = instance
+		console.log qset
 		$scope.qset = qset
 		$scope.privilege = 0
 		$scope.completed = false
@@ -51,22 +43,33 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 
 	$scope.submit = ->
 		console.log $scope.qset
-		if $scope.responses.length < $scope.qset.items.length
-			$scope.showToast "Must complete all questions."
-		else
+		console.log $scope.responses
+		numResponses = $scope.responses.length
+		complete = true
+
+		if numResponses < $scope.qset.items.length
+			complete = false
+		for response, i in $scope.responses[0..numResponses-1]
+			if not response
+				complete = false
+				break
+
+		if complete
 			try
-				$scope.privilege = $scope.responses.reduce(((total, current) ->
-					total + current), 0)
+				# $scope.privilege = $scope.responses.reduce(((total, current, i) ->
+				#	total + $scope.qset.items[i].answers[~~current].value), 0)
 				$scope.responses.map( (response, i) ->
 					Materia.Score.submitQuestionForScoring $scope.qset.items[i].id, response
 				)
-				$scope.completed = true
-				createStorageTable("PrivilegeTable", ["Privilege"])
-				insertStorageRow("PrivilegeTable", [$scope.privilege])
-				Materia.Score.submitFinalScoreFromClient(0, '', $scope.privilege)
-				Materia.Engine.end(false)
+				# $scope.completed = true
+				# createStorageTable("PrivilegeTable", ["Privilege"])
+				# insertStorageRow("PrivilegeTable", [$scope.privilege])
+				# Materia.Score.submitFinalScoreFromClient(0, '', $scope.privilege)
+				Materia.Engine.end(true)
 			catch e
 				alert 'Unable to save storage data'
+		else
+			$scope.showToast "Must complete all questions."
 		return
 
 	Materia.Engine.start($scope)

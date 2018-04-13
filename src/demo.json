@@ -9,17 +9,39 @@
 					"id": null,
 					"type": "MC",
 					"options": {
-						"isRange": "false"
+						"questionType": "2",
+						"style": "0"
 					},
 					"questions": [
 						{
-							"text": "Do you think this is true?"
+							"text": "What is your skin color? Use this chart: https://i.imgur.com/NHCXmaS.png"
 						}
 					],
 					"answers": [
 						{
-							"text": "[No Answer]",
-							"value": 0
+							"text": "Type I",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Type II",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "Type III",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "Type IV",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "Type V",
+							"value": 5,
+							"id": ""
 						}
 					]
 				},
@@ -28,17 +50,39 @@
 					"id": null,
 					"type": "MC",
 					"options": {
-						"isRange": "true"
+						"questionType": "1",
+						"style": "0"
 					},
 					"questions": [
 						{
-							"text": "Do you think this is right?"
+							"text": "How often are you discriminated against because of your skin color?"
 						}
 					],
 					"answers": [
 						{
-							"text": "[No Answer]",
-							"value": 0
+							"text": "Very Often",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Often",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "Sometimes",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "Rarely",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "Never",
+							"value": 5,
+							"id": ""
 						}
 					]
 				},
@@ -47,17 +91,96 @@
 					"id": null,
 					"type": "MC",
 					"options": {
-						"isRange": "false"
+						"questionType": "2",
+						"style": "0"
 					},
 					"questions": [
 						{
-							"text": "Do you think this is justified?"
+							"text": "Have you been sexually assulted?"
 						}
 					],
 					"answers": [
 						{
-							"text": "[No Answer]",
-							"value": 0
+							"text": "No",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Once",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "More than once",
+							"value": 5,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "MC",
+					"options": {
+						"questionType": "0",
+						"style": "0"
+					},
+					"questions": [
+						{
+							"text": "Do you work in a salaried job?"
+						}
+					],
+					"answers": [
+						{
+							"text": "Yes",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "No",
+							"value": 1,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "MC",
+					"options": {
+						"questionType": "1",
+						"style": "0"
+					},
+					"questions": [
+						{
+							"text": "Since starting college, how often do you travel internationally?"
+						}
+					],
+					"answers": [
+						{
+							"text": "Very Often",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "Often",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "Sometimes",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "Rarely",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "Never",
+							"value": 1,
+							"id": ""
 						}
 					]
 				}
