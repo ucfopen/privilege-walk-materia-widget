@@ -44,20 +44,24 @@
 					padding-left: 10px;
 					position: relative;
 
-					.delete {
+					.card-buttons {
 						position: absolute;
 						right: 0;
-						cursor: pointer;
-						opacity: 0.5;
+						top: 3px;
 						border: none;
 						background-color: #fff;
-						outline: none;
-						font-size: 20px;
 
-						&:hover {
-							color: red;
+						button {
+							opacity: 0.5;
+							border: none;
+							background-color: #fff;
+							outline: none;
+
+							&.delete:hover { color: red; }
+							&.move-arrow:hover { color: blue; }
 						}
 					}
+
 				}
 
 				md-input-container {
@@ -73,9 +77,15 @@
 				}
 			}
 
-			button.md-button.remove-option {
+			button.md-button.remove-option,
+			button.md-button.move-option {
 				height: 40px;
+				min-width: 30px;
 				margin-top: 20px;
+				opacity: 0.5;
+				i {
+					line-height: 36px;
+				}
 			}
 
 			button.md-button.add-question {

@@ -6,6 +6,7 @@
 
 		<!-- STYLESHEETS -->
 		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" type="text/css" href="scorescreen.css">
 
 		<!-- REQUIRED MATERIA JAVASCRIPT -->
@@ -13,10 +14,13 @@
 		<script src="materia.scorecore.js"></script>
 
 		<!-- ANGULAR DEPENDENCIES -->
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/labjs/2.0.3/LAB.min.js"></script>
 
 		<!-- MAIN WIDGET SCRIPT -->
 		<script src="scorescreen.js"></script>
@@ -28,19 +32,21 @@
 			<div layout-gt-sm="row" layout="column" id="content">
 				<div flex="55" id="card-container">
 
-					<md-card id="score-card" class="md-whiteframe-3dp card">
+					<md-card id="score-card" class="md-whiteframe-3dp card" ng-show="qset">
 						<div class="card-center" layout="column">
 
-							<md-card-title>
+							<md-card-title class="score-title">
 								<span class="md-headline">Your Privilege Score</span>
 							</md-card-title>
 
-							<md-card-content>
+							<md-card-content class="score-content">
 								<span id="score-value">
 									{{score}}
 								</span>
+								<md-button id="compare-button" class="md-accent md-raised" ng-click="showCompare()" ng-show="!isPreview">
+									Compare with Others
+								</md-button>
 							</md-card-content>
-
 						</div>
 					</md-card>
 
@@ -54,10 +60,10 @@
 
 							<md-card-content>
 								<p>
-									You Answered: {{question.answers[responses[$index]].text}}
+									You Answered: {{responses[$index]}}
 								</p>
 								<p>
-									Privilege Gained: {{question.answers[responses[$index]].value}}
+									Privilege Gained: {{scoreTable[$index].score}}
 								</p>
 							</md-card-content>
 
@@ -67,5 +73,34 @@
 				</div>
 			</div>
 		</md-content>
+
+		<div style="visibility: hidden">
+			<div class="md-dialog-container" id="distribution-dialog-container">
+				<md-dialog id="distribution-dialog" aria-label="Distribution Dialog">
+					<md-toolbar>
+						<div class="md-toolbar-tools">
+							<h2>How You Compare</h2>
+							<span flex></span>
+							<md-button class="md-icon-button" ng-click="cancel()">
+								<i class="material-icons">&#xE5CD;</i>
+							</md-button>
+						</div>
+					</md-toolbar>
+					Data: {{data}}
+					<md-dialog-content>
+						<div class="md-dialog-content">
+							<div class="chart-container" >
+								<div ng-show="invalidGraph">
+									Not enough data.<br/>
+									Come back to this page later to see how you compare.
+								</div>
+								<canvas ng-hide="invalidGraph" id="graph"></canvas>
+								<md-progress-circular id="compare-loading" md-mode="indeterminate" ng-hide="distributionReady"></md-progress-circular>
+							</div>
+						</div>
+					</md-dialog-content>
+				</md-dialog>
+			</div>
+		</div>
 	</body>
 </html>

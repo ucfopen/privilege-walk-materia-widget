@@ -31,18 +31,43 @@ h1.md-headline {
 	margin: 20px auto;
 	background-color: #6158ff;
 	color: white;
+	text-shadow: 1px 1px 1px black;
 	text-align: center;
 
 	.card-center {
 		align-self: center;
 	}
 
-	.md-headline {
-		font-weight: bold;
-		font-size: 26px;
+	.score-title {
+		padding-bottom: 5px;
+
+		.md-headline {
+			font-weight: bold;
+			font-size: 26px;
+		}
 	}
 
-	#score-value {
-		font-size: 60px;
+	.score-content {
+		display: flex;
+		flex-direction: column;
+
+		#score-value {
+			font-size: 60px;
+		}
+	}
+
+}
+
+#distribution-dialog {
+	position: relative;
+	top: calc(-50% + 350px);
+
+	#compare-loading {
+		margin: 0 auto;
+	}
+
+	.chart-container {
+		height: 400px;
+		width: 400px;
 	}
 }

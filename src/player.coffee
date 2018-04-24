@@ -25,7 +25,6 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 
 	$scope.start = (instance, qset, version) ->
 		$scope.instance = instance
-		console.log qset
 		$scope.qset = qset
 		$scope.privilege = 0
 		$scope.completed = false
@@ -42,8 +41,6 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 		Materia.Storage.Manager.insert.apply(this, args)
 
 	$scope.submit = ->
-		console.log $scope.qset
-		console.log $scope.responses
 		numResponses = $scope.responses.length
 		complete = true
 
@@ -56,16 +53,11 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 
 		if complete
 			try
-				# $scope.privilege = $scope.responses.reduce(((total, current, i) ->
-				#	total + $scope.qset.items[i].answers[~~current].value), 0)
-				$scope.responses.map( (response, i) ->
-					Materia.Score.submitQuestionForScoring $scope.qset.items[i].id, response
+				$scope.responses.forEach( (response, i) ->
+					answer = $scope.qset.items[i].answers[~~response].text
+					Materia.Score.submitQuestionForScoring $scope.qset.items[i].id, answer
 				)
-				# $scope.completed = true
-				# createStorageTable("PrivilegeTable", ["Privilege"])
-				# insertStorageRow("PrivilegeTable", [$scope.privilege])
-				# Materia.Score.submitFinalScoreFromClient(0, '', $scope.privilege)
-				Materia.Engine.end(true)
+				Materia.Engine.end()
 			catch e
 				alert 'Unable to save storage data'
 		else

@@ -5,7 +5,8 @@
 		<meta charset="utf-8"/>
 
 		<!-- STYLESHEETS -->
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
+		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 		<link rel="stylesheet" type="text/css" href="creator.css">
 
 		<!-- REQUIRED MATERIA JAVASCRIPT -->
@@ -20,11 +21,12 @@
 		<script src="materia.creatorcore.js"></script>
 
 		<!-- ANGULAR DEPENDENCIES -->
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-sanitize.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.5/angular-sanitize.min.js"></script>
 		<script src="angular-sortable-view.min.js"></script>
 
 		<!-- MAIN CREATOR SCRIPT -->
@@ -44,17 +46,29 @@
 			</md-toolbar>
 
 			<div layout-gt-sm="row" layout="column" id="content">
-				<div flex="55" id="card-container" sv-root sv-part="cards">
+				<div flex="55" id="card-container">
 
 					<md-card class="md-whiteframe-3dp card"
 						ng-repeat="(cardIndex, card) in cards"
-						layout="row"
-						sv-element>
+						layout="row">
 
 						<div class="card-right" layout="column" flex>
-							<button class="delete" ng-click="deleteQuestion(cardIndex)">×</button>
+							<div class="card-buttons">
+								<button class="move-arrow" ng-hide="$first" ng-click="swapCards(cardIndex, cardIndex - 1)">
+									<md-tooltip md-direction="below">Move Question Up</md-tooltip>
+									<i class="material-icons">&#xE316;</i>
+								</button>
+								<button class="move-arrow" ng-hide="$last" ng-click="swapCards(cardIndex, cardIndex + 1)">
+									<md-tooltip md-direction="below">Move Question Down</md-tooltip>
+									<i class="material-icons">&#xE313;</i>
+								</button>
+								<button class="delete" ng-click="deleteQuestion(cardIndex)">
+									<md-tooltip md-direction="below">Delete this Question</md-tooltip>
+									<i class="material-icons">&#xE872;</i>
+								</button>
+							</div>
 							<md-input-container class="md-block">
-								<label>Question</label>
+								<label>Question {{$index + 1}}</label>
 								<input
 									ng-model="card.question">
 							</md-input-container>
@@ -90,39 +104,36 @@
 								</md-checkbox>
 							</div>
 
-							<!-- Yes / No Preset -->
-							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.questionType==0">
+							<!-- Preset Preview -->
+							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.questionType < 2">
 								<md-radio-group layout="row">
-									<md-radio-button ng-disabled="true">
-										<md-tooltip md-direction="top">Value: </md-tooltip>
-										Yes
-									</md-radio-button>
-									<md-radio-button ng-disabled="true">No</md-radio-button>
-								</md-radio-group>
-							</md-card-actions>
-
-							<!-- Scale Preset -->
-							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.questionType==1">
-								<md-radio-group layout="row" ng-model="responses[$index]">
-									<md-radio-button ng-repeat="option in rangeOptions" ng-value="option.value" ng-disabled="true">
-										{{ option.text }}
+									<md-radio-button
+										ng-disabled="true"
+										ng-repeat="answer in card.answers"
+										value={{$index}}>
+										<md-tooltip md-direction="below">Value: {{answer.value}}</md-tooltip>
+										{{answer.text}}
 									</md-radio-button>
 								</md-radio-group>
 							</md-card-actions>
 
 							<!-- Custom -->
-							<md-card-actions layout layout-align="start start" class="radio-choice" ng-show="card.questionType==2">
-								<div layout="column">
-									<div layout="row" ng-repeat="option in card.answers">
-										<md-input-container aria-label="option {{$index + 1}}" ng-value="option.value" ng-disabled="true">
+							<md-card-actions layout layout-align="start start" class="custom-choice" ng-show="card.questionType==2">
+								<div layout="column" sv-root sv-part="card.answers">
+									<div layout="row" ng-repeat="option in card.answers" sv-element="dragOpts">
+										<md-button class="move-option" sv-handle>
+											<md-tooltip md-direction="below">Drag to Reorder</md-tooltip>
+											<i class="material-icons">&#xE25D;</i>
+										</md-button>
+										<md-input-container>
 											<label>Option {{$index + 1}}</label>
 											<input type="text" ng-model="option.text" required="true"/>
 											<div ng-messages="option.text.$error">
-												<div ng-message="required">Option is required</div>
+												<div ng-message="required">Option is required.</div>
 											</div>
 										</md-input-container>
 
-										<md-input-container aria-label="option {{$index + 1}}" ng-value="option.value" ng-disabled="true">
+										<md-input-container >
 											<label>Option {{$index + 1}} Value</label>
 											<input type="number" ng-model="option.value" required="true"/>
 											<div ng-messages="option.value.$error">
@@ -130,8 +141,9 @@
 											</div>
 										</md-input-container>
 
-										<md-button class="md-accent md-raised toggle-option remove-option" ng-click="removeOption(cardIndex, $index)">
-											Remove
+										<md-button class="remove-option" ng-click="removeOption(cardIndex, $index)">
+											<md-tooltip md-direction="below">Remove Option</md-tooltip>
+											<i class="material-icons">&#xE872;</i>
 										</md-button>
 									</div>
 									<md-button class="md-accent md-raised toggle-option" ng-click="addOption(cardIndex)">

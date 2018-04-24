@@ -8,7 +8,7 @@ Widget: Privilege Walk
 ###
 
 # Create an angular module to house our controller
-PrivilegeWalk = angular.module 'PrivilegeWalkCreator', ['ngMaterial', 'ngSanitize', 'angular-sortable-view']
+PrivilegeWalk = angular.module 'PrivilegeWalkCreator', ['ngMaterial', 'ngMessages', 'ngSanitize', 'angular-sortable-view']
 
 PrivilegeWalk.config ($mdThemingProvider) ->
 		$mdThemingProvider.theme('toolbar-dark', 'default')
@@ -18,11 +18,11 @@ PrivilegeWalk.config ($mdThemingProvider) ->
 PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize, $compile, Resource) ->
 
 	$scope.rangeOptions = [
-		{text:'Very Often', value: 1}
-		{text:'Often', value: 2}
+		{text:'Very Often', value: 5}
+		{text:'Often', value: 4}
 		{text:'Sometimes', value: 3}
-		{text:'Rarely', value: 4}
-		{text:'Never', value: 5}
+		{text:'Rarely', value: 2}
+		{text:'Never', value: 1}
 	]
 
 	$scope.yesNo = [
@@ -42,6 +42,9 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 
 	$scope.title = "My Privilege Walk Widget"
 	$scope.cards = []
+	$scope.dragging = false
+	$scope.dragOpts =
+		containment: ".custom-choice"
 
 	questionCount = 0
 
@@ -50,7 +53,6 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			setup()
 
 	$scope.initExistingWidget = (title,widget,qset) ->
-		console.log qset
 		$scope.$apply ->
 			$scope.title = title
 			for item in qset.items
@@ -60,7 +62,6 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 					answers: item.answers
 					style: item.options.style
 					reversed: item.options.reversed == 'true'
-				console.log $scope.cards
 				questionCount++
 
 	setup = ->
@@ -109,6 +110,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			when '2'
 				custom = JSON.parse(JSON.stringify($scope.rangeOptions))
 				$scope.cards[cardIndex].answers = custom
+		$scope.cards[cardIndex].reversed = false
 
 	$scope.reverseValues = (cardIndex) ->
 		answers = $scope.cards[cardIndex].answers
@@ -120,6 +122,9 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 				id: ''
 			)
 		$scope.cards[cardIndex].answers = reversedArray
+
+	$scope.swapCards = (index1, index2) ->
+		[$scope.cards[index1], $scope.cards[index2]] = [$scope.cards[index2], $scope.cards[index1]]
 
 	$scope.showToast = (message, delay=3000) ->
 		$mdToast.show(
@@ -156,7 +161,6 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 				answers: item.answers
 				style: item.options.style
 				reversed: item.options.reversed == '1'
-			console.log $scope.cards
 			questionCount++
 
 	$scope.onSaveComplete = (title, widget, qset, version) -> true
@@ -177,7 +181,6 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 			if item then qsetItems.push item
 
 		qset.items = qsetItems
-		console.log "saved qset", qset
 		return qset
 
 	processQsetItem: (item) ->
@@ -192,7 +195,7 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 
 		materiaType: "question"
 		id: null
-		type: 'MC'
+		type: 'QA'
 		options: {
 			questionType: questionType
 			style: style
