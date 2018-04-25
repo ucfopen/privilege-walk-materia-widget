@@ -40,7 +40,8 @@
 				<div flex="55" id="card-container">
 
 					<md-card class="md-whiteframe-3dp card"
-						ng-repeat="question in qset.items">
+						ng-repeat="question in qset.items"
+						ng-class="{'incomplete': showIncomplete && isIncomplete($index)}">
 						<div class="card-right" layout="column">
 
 							<md-card-title class="card-title">
@@ -60,9 +61,8 @@
 
 							<!-- Dropdown Style -->
 							<md-card-actions layout layout-align="start start" ng-show="question.options.style=='1'">
-								<md-input-container layout="row" class="dropdown-answer">
-									<span class="pre-answer">Answer:</span>
-									<md-select ng-model="responses[$index]" aria-label="Answer">
+								<md-input-container layout="row">
+									<md-select class="dropdown-answer" placeholder="Select Answer" ng-model="responses[$index]" aria-label="Answer">
 										<md-option
 											ng-repeat="answer in question.answers"
 											value={{$index}}>
@@ -77,12 +77,6 @@
 					<div layout layout-align="center center">
 						<md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
 					</div>
-
-				<modal-dialog show="completed"
-					dialog-title="Your Privilege Score">
-					<h1>{{privilege}}</h1>
-					<p>You can now safely exit this widget.</p>
-				</modal-dialog>
 
 				</div>
 			</div>

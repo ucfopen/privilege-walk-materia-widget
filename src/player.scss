@@ -8,12 +8,40 @@
 	margin-left: 5px;
 }
 
+md-toolbar {
+	position: fixed;
+	.md-toolbar-tools {
+		max-height: 64px;
+		height: 64px;
+
+		h2 {
+			margin-left: 5px;
+		}
+	}
+}
+
+#content {
+	padding-top: 64px;
+	height: 100%;
+
+	#card-container {
+		max-height: 100%;
+		overflow-y: scroll;
+	}
+}
+
 .card {
 	margin: 20px;
 
 	.card-title {
 		padding-bottom: 5px;
 	}
+}
+
+.card.incomplete {
+	border-top: 2px solid red;
+	border-bottom: 2px solid red;
+	background: #fff7f7;
 }
 
 h1.md-headline {
@@ -33,4 +61,5 @@ h1.md-headline {
 .dropdown-answer {
 	margin-left: 10px;
 	margin-top: 0;
+	min-width: 200px;
 }

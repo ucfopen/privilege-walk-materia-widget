@@ -53,6 +53,15 @@
 						layout="row">
 
 						<div class="card-right" layout="column" flex>
+							<form name="questionForm">
+								<md-input-container class="md-block">
+									<label>Question {{$index + 1}}</label>
+									<input ng-model="card.question" name="question" required spellcheck="true">
+									<div ng-messages="questionForm.question.$error">
+										<div ng-message="required">Question title is required.</div>
+									</div>
+								</md-input-container>
+							</form>
 							<div class="card-buttons">
 								<button class="move-arrow" ng-hide="$first" ng-click="swapCards(cardIndex, cardIndex - 1)">
 									<md-tooltip md-direction="below">Move Question Up</md-tooltip>
@@ -67,11 +76,6 @@
 									<i class="material-icons">&#xE872;</i>
 								</button>
 							</div>
-							<md-input-container class="md-block">
-								<label>Question {{$index + 1}}</label>
-								<input
-									ng-model="card.question">
-							</md-input-container>
 
 							<div layout="row">
 								<md-input-container>
@@ -94,14 +98,17 @@
 										</md-option>
 									</md-select>
 								</md-input-container>
-								<md-checkbox
-									aria-label="Reversed Values"
-									class="reverse-checkbox"
-									ng-change="reverseValues(cardIndex)"
-									ng-model="card.reversed"
-									ng-show="card.questionType!=2">
-									Reversed Values
-								</md-checkbox>
+								<div>
+									<md-checkbox
+										aria-label="Reversed Values"
+										class="reverse-checkbox"
+										ng-change="reverseValues(cardIndex)"
+										ng-model="card.reversed"
+										ng-show="card.questionType!=2">
+										Reversed Values
+									</md-checkbox>
+									<md-tooltip md-direction="right">{{reversedTooltips[card.questionType]}}</md-tooltip>
+								</div>
 							</div>
 
 							<!-- Preset Preview -->
@@ -121,30 +128,36 @@
 							<md-card-actions layout layout-align="start start" class="custom-choice" ng-show="card.questionType==2">
 								<div layout="column" sv-root sv-part="card.answers">
 									<div layout="row" ng-repeat="option in card.answers" sv-element="dragOpts">
-										<md-button class="move-option" sv-handle>
-											<md-tooltip md-direction="below">Drag to Reorder</md-tooltip>
-											<i class="material-icons">&#xE25D;</i>
-										</md-button>
-										<md-input-container>
-											<label>Option {{$index + 1}}</label>
-											<input type="text" ng-model="option.text" required="true"/>
-											<div ng-messages="option.text.$error">
-												<div ng-message="required">Option is required.</div>
-											</div>
-										</md-input-container>
+										<form name="optionsForm">
+											<md-button class="option-controls" sv-handle tabindex="-1">
+												<md-tooltip md-direction="below">Drag to Reorder</md-tooltip>
+												<i class="material-icons">&#xE25D;</i>
+											</md-button>
 
-										<md-input-container >
-											<label>Option {{$index + 1}} Value</label>
-											<input type="number" ng-model="option.value" required="true"/>
-											<div ng-messages="option.value.$error">
-												<div ng-message="required">Value is required</div>
-											</div>
-										</md-input-container>
+											<md-input-container>
+												<label>Option {{$index + 1}}</label>
+												<input type="text" ng-model="option.text" name="text" required>
+												<div ng-messages="optionsForm.text.$error">
+													<div ng-message="required">Option is required.</div>
+												</div>
+											</md-input-container>
 
-										<md-button class="remove-option" ng-click="removeOption(cardIndex, $index)">
-											<md-tooltip md-direction="below">Remove Option</md-tooltip>
-											<i class="material-icons">&#xE872;</i>
-										</md-button>
+											<md-input-container >
+												<label>Option {{$index + 1}} Value</label>
+												<input type="number" ng-model="option.value" name="value" min="1" ng-pattern="/^[0-9]+$/" required>
+												<div ng-messages="optionsForm.value.$error" multiple="">
+													<div ng-message="required">Value is required</div>
+													<div ng-message="min">Value must be greater than 1</div>
+													<div ng-message="pattern">Value must be a whole number</div>
+													<div ng-message="number">Value must be a whole number</div>
+												</div>
+											</md-input-container>
+
+											<md-button class="option-controls" ng-click="removeOption(cardIndex, $index)" tabindex="-1">
+												<md-tooltip md-direction="below">Remove Option</md-tooltip>
+												<i class="material-icons">&#xE872;</i>
+											</md-button>
+										</form>
 									</div>
 									<md-button class="md-accent md-raised toggle-option" ng-click="addOption(cardIndex)">
 										Add Option
@@ -155,10 +168,13 @@
 						</div>
 					</md-card>
 
-					<div layout layout-align="center center">
+					<div layout layout-align="center center" ng-show="ready">
 						<md-button class="md-accent md-raised add-question" ng-click="addQuestion()">
 							Add Question
 						</md-button>
+					</div>
+					<div layout layout-align="center center" ng-hide="ready">
+						<md-progress-linear md-mode="query"></md-progress-linear>
 					</div>
 
 				</div>

@@ -13,7 +13,6 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 	$scope.qset = null
 	$scope.instance = null
 	$scope.responses = []
-	$scope.privilege = 0
 
 	$scope.showToast = (message) ->
 		$mdToast.show(
@@ -26,9 +25,11 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 	$scope.start = (instance, qset, version) ->
 		$scope.instance = instance
 		$scope.qset = qset
-		$scope.privilege = 0
 		$scope.completed = false
 		$scope.$apply()
+
+	$scope.isIncomplete = (index) ->
+		$scope.responses[index] == undefined
 
 	createStorageTable = (tableName, columns) ->
 		args = columns
@@ -61,6 +62,7 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 			catch e
 				alert 'Unable to save storage data'
 		else
+			$scope.showIncomplete = true
 			$scope.showToast "Must complete all questions."
 		return
 

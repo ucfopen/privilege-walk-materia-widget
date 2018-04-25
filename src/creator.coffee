@@ -40,7 +40,11 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		{text:'Dropdown Menu', value: '1'}
 	]
 
-	$scope.title = "My Privilege Walk Widget"
+	$scope.reversedTooltips =
+		'0': "When reversed, 'Yes' will have a value of 1 and 'No' will have a value of 5"
+		'1': "When reversed, 'Very Often' will have a value of 1 and 'Never' will have a value of 5"
+
+	$scope.ready = false
 	$scope.cards = []
 	$scope.dragging = false
 	$scope.dragOpts =
@@ -50,6 +54,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 
 	$scope.initNewWidget = (widget) ->
 		$scope.$apply ->
+			$scope.title = "My Privilege Walk Widget"
 			setup()
 
 	$scope.initExistingWidget = (title,widget,qset) ->
@@ -63,9 +68,14 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 					style: item.options.style
 					reversed: item.options.reversed == 'true'
 				questionCount++
+			$scope.ready = true
+			console.log "should be ready"
+			return
+		console.log "actually ready"
 
 	setup = ->
 		$scope.addQuestion()
+		$scope.ready = true
 
 	$scope.addQuestion = ->
 		questionCount++
@@ -135,22 +145,22 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		)
 
 	$scope.onSaveClicked = ->
-		_isValid = $scope.validation()
+		_isValid = validation()
 
 		if _isValid
 			qset = Resource.buildQset $scope.title, $scope.cards
 			if qset then Materia.CreatorCore.save $scope.title, qset
 		else
-			Materia.CreatorCore.cancelSave "Please make sure every question is complete"
+			Materia.CreatorCore.cancelSave "Please make sure every question is complete."
 			return false
 
-	$scope.validation = ->
-		$scope.invalid = false
-
+	validation = ->
 		for card in $scope.cards
-			if !card.question
-				$scope.invalid = true
+			if !card.question || !card.answers
 				return false
+			for answer in card.answers
+				if !answer.text || ~~answer.value != answer.value
+					return false
 		return true
 
 	$scope.onQuestionImportComplete = (items) ->

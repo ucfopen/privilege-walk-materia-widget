@@ -43,8 +43,7 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 		Materia.ScoreCore.setHeight $("#card-container").height()
 
 	$scope.handleScoreDistribution = (data) ->
-		console.log "got distribution data: ", data
-		$scope.data = data
+		console.log "got distribution data: ", data[..]
 		if data
 			graphData = data
 			ensureScoreInGraph()
@@ -84,7 +83,7 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 			backgroundColors = new Array(graphData.length)
 			backgroundColors.fill('rgba(50, 50, 50, 0.8)')
 			scoreIndex = graphData.indexOf($scope.score)
-			highlightColor = 'rgba(255, 99, 132, 0.8)'
+			highlightColor = 'rgb(255, 64, 129)'
 			backgroundColors[scoreIndex] = highlightColor
 
 			# required for bar chart
@@ -130,9 +129,12 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 			$scope.responses[i] = score.data[1]
 
 	ensureScoreInGraph = ->
-		if graphData.indexOf($scope.score) == -1
-			graphData.push($scope.score)
-			graphData.sort( (a, b) -> b - a )
+		for score, i in graphData
+			return if score == $scope.score
+			if score < $scope.score
+				return graphData[i] = $scope.score
+		graphData.pop()
+		graphData.push $scope.score
 
 	calculateMaxScore = ->
 		max = 0
