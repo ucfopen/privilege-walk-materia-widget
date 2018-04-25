@@ -1,5 +1,5 @@
 {
-	"name": "Privilege Walk",
+	"name": "Privilege Walk Demo",
 	"qset": {
 		"version": 1,
 		"data": {
@@ -7,51 +7,11 @@
 				{
 					"materiaType": "question",
 					"id": null,
-					"type": "MC",
-					"options": {
-						"questionType": "2",
-						"style": "0"
-					},
-					"questions": [
-						{
-							"text": "What is your skin color? Use this chart: https://i.imgur.com/NHCXmaS.png"
-						}
-					],
-					"answers": [
-						{
-							"text": "Type I",
-							"value": 1,
-							"id": ""
-						},
-						{
-							"text": "Type II",
-							"value": 2,
-							"id": ""
-						},
-						{
-							"text": "Type III",
-							"value": 3,
-							"id": ""
-						},
-						{
-							"text": "Type IV",
-							"value": 4,
-							"id": ""
-						},
-						{
-							"text": "Type V",
-							"value": 5,
-							"id": ""
-						}
-					]
-				},
-				{
-					"materiaType": "question",
-					"id": null,
-					"type": "MC",
+					"type": "QA",
 					"options": {
 						"questionType": "1",
-						"style": "0"
+						"style": "0",
+						"reversed": "false"
 					},
 					"questions": [
 						{
@@ -61,12 +21,12 @@
 					"answers": [
 						{
 							"text": "Very Often",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Often",
-							"value": 2,
+							"value": 4,
 							"id": ""
 						},
 						{
@@ -76,12 +36,12 @@
 						},
 						{
 							"text": "Rarely",
-							"value": 4,
+							"value": 2,
 							"id": ""
 						},
 						{
 							"text": "Never",
-							"value": 5,
+							"value": 1,
 							"id": ""
 						}
 					]
@@ -89,29 +49,137 @@
 				{
 					"materiaType": "question",
 					"id": null,
-					"type": "MC",
+					"type": "QA",
 					"options": {
-						"questionType": "2",
-						"style": "0"
+						"questionType": "1",
+						"style": "0",
+						"reversed": "false"
 					},
 					"questions": [
 						{
-							"text": "Have you been sexually assulted?"
+							"text": "How often are you the only person of your race in a room?"
 						}
 					],
 					"answers": [
 						{
-							"text": "No",
-							"value": 1,
+							"text": "Very Often",
+							"value": 5,
 							"id": ""
 						},
 						{
-							"text": "Once",
+							"text": "Often",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "Sometimes",
 							"value": 3,
 							"id": ""
 						},
 						{
-							"text": "More than once",
+							"text": "Rarely",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "Never",
+							"value": 1,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "QA",
+					"options": {
+						"questionType": "2",
+						"style": "1",
+						"reversed": "false"
+					},
+					"questions": [
+						{
+							"text": "How do you identify your sexual orientation?"
+						}
+					],
+					"answers": [
+						{
+							"text": "Androphilic",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Asexual",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Bisexual",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Demi-sexuality",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Fluid",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Gay",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Gay-asexuality",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Gynephilic",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Heterosexual",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "Homosexual",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Lesbian",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Other",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Pansexual",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Polysexual",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Queer",
+							"value": 1,
+							"id": ""
+						},
+						{
+							"text": "Straight",
 							"value": 5,
 							"id": ""
 						}
@@ -120,10 +188,11 @@
 				{
 					"materiaType": "question",
 					"id": null,
-					"type": "MC",
+					"type": "QA",
 					"options": {
 						"questionType": "0",
-						"style": "0"
+						"style": "0",
+						"reversed": "false"
 					},
 					"questions": [
 						{
@@ -146,14 +215,237 @@
 				{
 					"materiaType": "question",
 					"id": null,
-					"type": "MC",
+					"type": "QA",
 					"options": {
 						"questionType": "1",
-						"style": "0"
+						"style": "0",
+						"reversed": "false"
 					},
 					"questions": [
 						{
-							"text": "Since starting college, how often do you travel internationally?"
+							"text": "How often have you (or the caregivers who you lived with as a child) ever lived below the poverty line?"
+						}
+					],
+					"answers": [
+						{
+							"text": "Very Often",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "Often",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "Sometimes",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "Rarely",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "Never",
+							"value": 1,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "QA",
+					"options": {
+						"questionType": "0",
+						"style": "0",
+						"reversed": "false"
+					},
+					"questions": [
+						{
+							"text": "Do you have any student loans?"
+						}
+					],
+					"answers": [
+						{
+							"text": "Yes",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "No",
+							"value": 1,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "QA",
+					"options": {
+						"questionType": "2",
+						"style": "0",
+						"reversed": "false"
+					},
+					"questions": [
+						{
+							"text": "How much of your tuition is covered by your parents?"
+						}
+					],
+					"answers": [
+						{
+							"text": "none",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "1-25%",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "26-50%",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "51-75%",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "76-100%",
+							"value": 1,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "QA",
+					"options": {
+						"questionType": "1",
+						"style": "0",
+						"reversed": "false"
+					},
+					"questions": [
+						{
+							"text": "How often do you skip meals to save money?"
+						}
+					],
+					"answers": [
+						{
+							"text": "Very Often",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "Often",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "Sometimes",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "Rarely",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "Never",
+							"value": 1,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "QA",
+					"options": {
+						"questionType": "0",
+						"style": "0",
+						"reversed": "false"
+					},
+					"questions": [
+						{
+							"text": "Do you have frequent flier miles?"
+						}
+					],
+					"answers": [
+						{
+							"text": "Yes",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "No",
+							"value": 1,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "QA",
+					"options": {
+						"questionType": "1",
+						"style": "0",
+						"reversed": "false"
+					},
+					"questions": [
+						{
+							"text": "How often have you been shamed for your religious beliefs?"
+						}
+					],
+					"answers": [
+						{
+							"text": "Very Often",
+							"value": 5,
+							"id": ""
+						},
+						{
+							"text": "Often",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "Sometimes",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "Rarely",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "Never",
+							"value": 1,
+							"id": ""
+						}
+					]
+				},
+				{
+					"materiaType": "question",
+					"id": null,
+					"type": "QA",
+					"options": {
+						"questionType": "1",
+						"style": "0",
+						"reversed": "false"
+					},
+					"questions": [
+						{
+							"text": "How often do you experience difficulties with finding a bathroom that is accessible and safe?"
 						}
 					],
 					"answers": [
