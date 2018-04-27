@@ -21,7 +21,7 @@ md-toolbar {
 }
 
 #content {
-	padding-top: 64px;
+	padding-top: 69px;
 	height: 100%;
 
 	#card-container {
@@ -41,6 +41,7 @@ md-toolbar {
 .card.incomplete {
 	border-top: 2px solid red;
 	border-bottom: 2px solid red;
+	margin: 18px 20px;
 	background: #fff7f7;
 }
 
@@ -62,4 +63,41 @@ h1.md-headline {
 	margin-left: 10px;
 	margin-top: 0;
 	min-width: 200px;
+}
+
+.arrow_box {
+	position: absolute;
+	background: #ffff82;
+	color: #333;
+	right: 135px;
+	top: 20px;
+	padding: 5px 20px;
+	font-size: 14px;
+	animation: arrowbob 1s infinite;
+	z-index: 10;
+}
+@keyframes arrowbob {
+	0% {
+		transform: translate(0, 0);
+	}
+	60% {
+		transform: translate(15px, 0);
+	}
+	100% {
+		transform: translate(0, 0);
+	}
+}
+.arrow_box:after {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(136, 183, 213, 0);
+	border-left-color: #ffff82;
+	border-width: 14px;
+	margin-top: -15px;
 }

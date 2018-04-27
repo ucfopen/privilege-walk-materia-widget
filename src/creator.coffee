@@ -15,7 +15,15 @@ PrivilegeWalk.config ($mdThemingProvider) ->
 			.primaryPalette('indigo')
 			.dark()
 
-PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize, $compile, Resource) ->
+PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog, $sanitize, $compile, Resource) ->
+
+	$scope.groups = [
+		{text:'General', color:'#616161'}
+	]
+
+	# 700 colors from material-ui
+	# TODO track which colors are being used
+	$scope.colors = ['#D32F2F', '#C2185B', '#7B1FA2', '#512DA8', '#303F9F', '#1976D2', '#0288D1', '#0097A7', '#00796B', '#388E3C', '#689F38', '#E64A19', '#5D4037', '#455A64', '#616161']
 
 	$scope.rangeOptions = [
 		{text:'Very Often', value: 5}
@@ -26,40 +34,45 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 	]
 
 	$scope.yesNo = [
-		{text:'Yes', value: 5, id: ''}
-		{text:'No', value: 1, id: ''}
+		{text:'Yes', value: 5}
+		{text:'No', value: 1}
 	]
 
-	$scope.questionTypes =
-		'0': "Preset: Yes / No"
-		'1': "Preset: Scale"
-		'2': "Custom"
+	$scope.questionTypes = [
+		"Preset: Yes / No"
+		"Preset: Scale"
+		"Custom"
+	]
 
 	$scope.displayStyles = [
 		{text:'Horizontal Scale', value: '0'}
 		{text:'Dropdown Menu', value: '1'}
 	]
 
-	$scope.reversedTooltips =
-		'0': "When reversed, 'Yes' will have a value of 1 and 'No' will have a value of 5"
-		'1': "When reversed, 'Very Often' will have a value of 1 and 'Never' will have a value of 5"
+	reversedTooltips = [
+		"When reversed, 'Yes' will have a value of 1 and 'No' will have a value of 5"
+		"When reversed, 'Very Often' will have a value of 1 and 'Never' will have a value of 5"
+		"Use type 'Dropdown Menu' if you have more than 5 options, or if your options don't resemble a scale."
+	]
 
 	$scope.ready = false
 	$scope.cards = []
 	$scope.dragging = false
-	$scope.dragOpts =
-		containment: ".custom-choice"
+	$scope.dragOpts = {containment: ".custom-choice"}
 
 	questionCount = 0
+	originatorEv = null
 
 	$scope.initNewWidget = (widget) ->
 		$scope.$apply ->
 			$scope.title = "My Privilege Walk Widget"
-			setup()
+			$scope.addQuestion()
+			$scope.ready = true
 
 	$scope.initExistingWidget = (title,widget,qset) ->
 		$scope.$apply ->
 			$scope.title = title
+			$scope.groups = qset.options.groups
 			for item in qset.items
 				$scope.cards.push
 					question: item.questions[0].text
@@ -67,15 +80,52 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 					answers: item.answers
 					style: item.options.style
 					reversed: item.options.reversed == 'true'
+					group = item.options.group
 				questionCount++
 			$scope.ready = true
 			console.log "should be ready"
 			return
 		console.log "actually ready"
 
-	setup = ->
-		$scope.addQuestion()
-		$scope.ready = true
+	$scope.openColorMenu = ($mdMenu, ev, cardIndex) ->
+		originatorEv = ev;
+		$mdMenu.open(ev);
+
+	$scope.showEditGroups = (ev) ->
+		$mdDialog.show(
+			contentElement: '#edit-groups-dialog-container'
+			parent: angular.element(document.body)
+			targetEvent: ev
+			clickOutsideToClose: true
+			openFrom: ev.currentTarget
+			closeTo: originatorEv.currentTarget
+		)
+
+	$scope.setGroupColor = (groupIndex, color) ->
+		$scope.groups[groupIndex].color = color
+
+	# TODO make this intelligently pick a color that isn't used
+	$scope.addGroup = () ->
+		$scope.groups.push(
+			{text: 'New Group', color:'#D32F2F'}
+		)
+
+	$scope.removeGroup = (index) ->
+		console.log "removing group at ", index
+		$scope.groups.splice index, 1
+
+	$scope.selectGroup = (cardIndex, groupIndex) ->
+		$scope.cards[cardIndex].group = groupIndex
+
+	$scope.swapCards = (index1, index2) ->
+		[$scope.cards[index1], $scope.cards[index2]] = [$scope.cards[index2], $scope.cards[index1]]
+
+	$scope.deleteQuestion = (index) ->
+		$scope.cards.splice index, 1
+		questionCount--
+		if $scope.cards.length == 0
+			$scope.showToast("Must have at least one question.")
+			$scope.addQuestion()
 
 	$scope.addQuestion = ->
 		questionCount++
@@ -85,14 +135,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			questionType: '1'
 			style: '0'
 			reversed: false
-
-	$scope.deleteQuestion = (index) ->
-		$scope.cards.splice index, 1
-		questionCount--
-		if $scope.cards.length == 0
-			$scope.showToast("Must have at least one question.")
-			$scope.addQuestion()
-			return
+			group: 0
 
 	$scope.addOption = (cardIndex) ->
 		style = $scope.cards[cardIndex].style
@@ -125,7 +168,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 	$scope.reverseValues = (cardIndex) ->
 		answers = $scope.cards[cardIndex].answers
 		reversedArray = []
-		for i in [0..answers.length-1]
+		for i in [0...answers.length]
 			reversedArray.push(
 				text: answers[i].text,
 				value: answers[answers.length-i-1].value
@@ -133,8 +176,19 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 			)
 		$scope.cards[cardIndex].answers = reversedArray
 
-	$scope.swapCards = (index1, index2) ->
-		[$scope.cards[index1], $scope.cards[index2]] = [$scope.cards[index2], $scope.cards[index1]]
+	$scope.showTypeDialog = (ev, questionType) ->
+		$scope.dialogText = reversedTooltips[questionType]
+		$mdDialog.show(
+			contentElement: '#dialog-container'
+			parent: angular.element(document.body)
+			targetEvent: ev
+			clickOutsideToClose: true
+			openFrom: ev.currentTarget
+			closeTo: ev.currentTarget
+		)
+
+	$scope.cancel = () ->
+		$mdDialog.hide()
 
 	$scope.showToast = (message, delay=3000) ->
 		$mdToast.show(
@@ -148,7 +202,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 		_isValid = validation()
 
 		if _isValid
-			qset = Resource.buildQset $scope.title, $scope.cards
+			qset = Resource.buildQset $scope.title, $scope.cards, $scope.groups
 			if qset then Materia.CreatorCore.save $scope.title, qset
 		else
 			Materia.CreatorCore.cancelSave "Please make sure every question is complete."
@@ -171,6 +225,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 				answers: item.answers
 				style: item.options.style
 				reversed: item.options.reversed == '1'
+				group: item.options.group
 			questionCount++
 
 	$scope.onSaveComplete = (title, widget, qset, version) -> true
@@ -178,7 +233,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $sanitize
 	Materia.CreatorCore.start $scope
 
 PrivilegeWalk.factory 'Resource', ($sanitize) ->
-	buildQset: (title, questions) ->
+	buildQset: (title, questions, groups) ->
 		qsetItems = []
 		qset = {}
 
@@ -191,6 +246,7 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 			if item then qsetItems.push item
 
 		qset.items = qsetItems
+		qset.options = {groups: groups}
 		return qset
 
 	processQsetItem: (item) ->
@@ -198,6 +254,7 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 		questionType = $sanitize item.questionType
 		style = $sanitize item.style
 		reversed = $sanitize item.reversed
+		group = $sanitize item.group
 
 		# clean out previously generated IDs
 		for answer in item.answers
@@ -210,6 +267,7 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 			questionType: questionType
 			style: style
 			reversed: reversed
+			group: group
 		}
 		questions: [{ text: question }]
 		answers: item.answers

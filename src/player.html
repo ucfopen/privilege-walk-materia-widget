@@ -5,7 +5,7 @@
 		<meta charset="utf-8"/>
 
 		<!-- STYLESHEETS -->
-		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+		<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.css">
 		<link rel="stylesheet" type="text/css" href="player.css">
 		<link rel="stylesheet" type="text/css" href="ng-modal.css">
 
@@ -17,10 +17,10 @@
 		<script src="materia.storage.table.js"></script>
 
 		<!-- ANGULAR DEPENDENCIES -->
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angular_material/1.1.8/angular-material.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-aria.min.js"></script>
 
 		<!-- MAIN WIDGET SCRIPT -->
 		<script src="player.js"></script>
@@ -29,11 +29,15 @@
 
 	<body ng-app="PrivilegeWalkEngine" ng-controller="PrivilegeWalkEngineCtrl" ng-cloak>
 		<md-content id="container">
-
 			<md-toolbar>
-				<div class="md-toolbar-tools">
+				<div class="md-toolbar-tools" layout="row">
 					<h2>{{instance.name}}</h2>
+					<span flex></span>
+					<md-button class="md-raised" ng-class="{'md-accent': progress == 100}" aria-label="Submit" ng-click="submit()">
+						Submit
+					</md-button>
 				</div>
+				<md-progress-linear class="md-accent" md-mode="determinate" value="{{progress}}"></md-progress-linear>
 			</md-toolbar>
 
 			<div layout-gt-sm="row" layout="column" id="content">
@@ -50,7 +54,7 @@
 
 							<!-- Scale Style -->
 							<md-card-actions layout layout-align="start start" ng-show="question.options.style=='0'">
-								<md-radio-group layout="row" ng-model="responses[$index]" class="radio-spacing">
+								<md-radio-group layout="row" ng-model="responses[$index]" class="radio-spacing" ng-change="updateCompleted()">
 									<md-radio-button
 										ng-repeat="answer in question.answers"
 										value={{$index}}>
@@ -62,7 +66,7 @@
 							<!-- Dropdown Style -->
 							<md-card-actions layout layout-align="start start" ng-show="question.options.style=='1'">
 								<md-input-container layout="row">
-									<md-select class="dropdown-answer" placeholder="Select Answer" ng-model="responses[$index]" aria-label="Answer">
+									<md-select class="dropdown-answer" placeholder="Select Answer" ng-model="responses[$index]" aria-label="Answer" ng-change="updateCompleted()">
 										<md-option
 											ng-repeat="answer in question.answers"
 											value={{$index}}>
@@ -74,12 +78,9 @@
 						</div>
 					</md-card>
 
-					<div layout layout-align="center center">
-						<md-button class="md-raised md-primary" ng-click="submit()">Submit</md-button>
-					</div>
-
 				</div>
 			</div>
 		</md-content>
+		<div class="arrow_box" ng-show="progress == 100">Click to finish</div>
 	</body>
 </html>

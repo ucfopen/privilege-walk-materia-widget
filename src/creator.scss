@@ -49,13 +49,12 @@
 						right: 0;
 						top: 3px;
 						border: none;
-						background-color: #fff;
 
 						button {
 							opacity: 0.5;
 							border: none;
-							background-color: #fff;
 							outline: none;
+							background: none;
 
 							&.delete:hover { color: red; }
 							&.move-arrow:hover { color: blue; }
@@ -63,6 +62,7 @@
 					}
 
 				}
+
 
 				md-input-container {
 					margin: 25px 5px 15px;
@@ -77,9 +77,21 @@
 				}
 			}
 
+
+			button.reversed-info {
+				opacity: 0.5;
+				border: none;
+				outline: none;
+				background: white;
+				padding-left: 3px;
+				i {
+					font-size: 18px;
+				}
+			}
+
 			button.md-button.option-controls {
 				min-width: 30px;
-				margin-top: 20px;
+				margin-top: 10px;
 				opacity: 0.5;
 				i {
 					line-height: 36px;
@@ -110,8 +122,46 @@
 			}
 		}
 	}
-	.highlight {
-		background-color : #FFFFCC;
+}
+
+.color-circle {
+	width: 15px;
+	height: 15px;
+	border-radius: 100%;
+	margin-right: 10px;
+}
+
+.color-bar {
+	width: 70px;
+	height: 25px;
+	border-radius: 2px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.color-menu-content {
+	.color-menu-option {
+		button {
+			display: flex;
+
+			&.selected {
+				border-left: 5px solid black;
+			}
+		}
 	}
 }
 
+#groupsForm {
+	padding-left: 5px;
+	margin-bottom: 3px;
+
+	// remove extra spacing from input error handler
+	.md-errors-spacer:empty { display: none; }
+	.remove-group i {
+		margin-top: 10px;
+	}
+}
+
+.remove-group {
+	min-width: 30px;
+}

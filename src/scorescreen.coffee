@@ -29,8 +29,8 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 		generateResponses()
 		calculateScore()
 		calculateMaxScore()
-		$scope.$apply()
 		Materia.ScoreCore.setHeight $("#card-container").height()
+		$scope.$apply()
 
 	$scope.update = (qset, scoreTable) ->
 		$scope.qset = qset
@@ -39,8 +39,8 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 		calculateScore()
 		calculateMaxScore()
 		ensureScoreInGraph() if graphData
-		$scope.$apply()
 		Materia.ScoreCore.setHeight $("#card-container").height()
+		$scope.$apply()
 
 	$scope.handleScoreDistribution = (data) ->
 		console.log "got distribution data: ", data[..]
