@@ -49,24 +49,36 @@
 						</div>
 					</md-card>
 
-					<md-card class="md-whiteframe-3dp card"
-						ng-repeat="question in qset.items">
-						<div class="card-right" layout="column">
+					<md-card
+						id="group_{{groupNumber}}"
+						class="md-whiteframe-3dp card group-card"
+						ng-repeat="(groupNumber, group) in groups"
+						style="background-color: {{qset.options.groups[groupNumber].color}}">
+						<md-card-content layout="row" class="group-header">
+							<h2>{{qset.options.groups[groupNumber].text}}</h2>
+							<h2>{{groupSubscores[groupNumber]}}</h2>
+						</md-card-content>
+						<div class="question-container">
+							<md-card class="md-whiteframe-3dp card" ng-repeat="questionIndex in group">
+								<md-card-title>
+									<span class="md-headline">
+										{{qset.items[questionIndex].questions[0].text}}
+									</span>
+								</md-card-title>
 
-							<md-card-title>
-								<span class="md-headline">{{question.questions[0].text}}</span>
-							</md-card-title>
-
-							<md-card-content>
-								<p>
-									You Answered: {{responses[$index]}}
-								</p>
-								<p>
-									Privilege Gained: {{scoreTable[$index].score}}
-								</p>
-							</md-card-content>
-
+								<md-card-content>
+									<p>
+										You Answered: {{responses[questionIndex]}}
+									</p>
+									<p>
+										Privilege Gained: {{scoreTable[questionIndex].score}}
+									</p>
+								</md-card-content>
+							</md-card>
 						</div>
+						<md-button ng-click="toggleQuestions(groupNumber)">
+							Show Questions
+						</md-button>
 					</md-card>
 
 				</div>

@@ -74,12 +74,12 @@
 									<i class="material-icons">&#xE313;</i>
 								</button>
 
-								<md-menu md-offset="-50 0">
+								<md-menu md-offset="-150 10">
 									<button aria-label="Open color/group menu" class="md-icon-button" ng-click="openColorMenu($mdMenu, $event, cardIndex)">
 										<md-tooltip md-direction="below">Question Group</md-tooltip>
 										<i class="material-icons">&#xE3B7;</i>
 									</button>
-									<md-menu-content class="color-menu-content">
+									<md-menu-content class="color-menu-content" width="4">
 										<md-menu-item ng-repeat="group in groups" class="color-menu-option" ng-click="selectGroup(cardIndex, $index)">
 											<md-button ng-click="ctrl.redial($event)" ng-class="{'selected': $index == card.group}">
 												<div class="color-circle" style="background-color: {{group.color}}"></div>
@@ -231,40 +231,38 @@
 								</md-button>
 							</div>
 						</md-toolbar>
-						<md-dialog-content>
-							<div class="md-dialog-content">
-								<div layout="row" ng-repeat="(groupIndex, group) in groups">
-									<form name="groupsForm" id="groupsForm" style="border-left: 7px solid {{group.color}}">
-										<md-input-container>
-											<label>Group Name</label>
-											<input type="text" ng-model="group.text" name="text" required>
-											<div ng-messages="groupsForm.text.$error">
-												<div ng-message="required">This is required.</div>
-											</div>
-										</md-input-container>
+						<md-dialog-content class="md-dialog-content">
+							<div layout="row" ng-repeat="(groupIndex, group) in groups">
+								<form name="groupsForm" id="groupsForm" style="border-left: 7px solid {{group.color}}">
+									<md-input-container>
+										<label>Group Name</label>
+										<input type="text" ng-model="group.text" name="text" required md-maxlength="20" maxlength="20">
+										<div ng-messages="groupsForm.text.$error">
+											<div ng-message="required">This is required.</div>
+										</div>
+									</md-input-container>
 
-										<md-menu>
-											<md-button aria-label="Change Color Menu" class="color-menu-option" ng-click="$mdMenu.open($event)">
-													Change Color
-											</md-button>
-											<md-menu-content width="3">
-												<md-menu-item ng-repeat="color in colors">
-													<md-button aria-label="Set color to {{color}}" ng-click="setGroupColor(groupIndex, color)">
-														<div class="color-bar" style="background-color: {{color}}"></div>
-													</md-button>
-												</md-menu-item>
-											</md-menu-content>
-										</md-menu>
-										<md-button ng-click="removeGroup($index)" class="remove-group" ng-hide="$first" tabindex="-1">
-											<md-tooltip md-direction="below">Remove Group</md-tooltip>
-											<i class="material-icons">&#xE15D;</i>
+									<md-menu>
+										<md-button aria-label="Change Color Menu" class="color-menu-option" ng-click="$mdMenu.open($event)">
+											Change Color
 										</md-button>
-									</form>
-								</div>
-								<md-button class="md-accent md-raised toggle-option" ng-click="addGroup()">
-									Add Group
-								</md-button>
+										<md-menu-content width="3">
+											<md-menu-item ng-repeat="color in colors">
+												<md-button aria-label="Set color to {{color}}" ng-click="setGroupColor(groupIndex, color)">
+													<div class="color-bar" style="background-color: {{color}}"></div>
+												</md-button>
+											</md-menu-item>
+										</md-menu-content>
+									</md-menu>
+									<md-button ng-click="removeGroup($index)" class="remove-group" ng-hide="$first" tabindex="-1">
+										<md-tooltip md-direction="below">Remove Group</md-tooltip>
+										<i class="material-icons">&#xE15D;</i>
+									</md-button>
+								</form>
 							</div>
+							<md-button class="md-accent md-raised toggle-option" ng-click="addGroup()">
+								Add Group
+							</md-button>
 						</md-dialog-content>
 					</md-dialog>
 				</div>

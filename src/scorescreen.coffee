@@ -12,6 +12,9 @@ PrivilegeWalk = angular.module 'PrivilegeWalkScorescreen', ['ngMaterial', 'ngMes
 PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog) ->
 	$scope.qset = null
 	$scope.instance = null
+	$scope.groups = null
+	$scope.groupSubscores = null
+	$scope.isPreview = false
 
 	graphData = null
 	maxScore = null
@@ -26,20 +29,20 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 		$scope.qset = qset
 		$scope.scoreTable = scoreTable
 		$scope.isPreview = isPreview
+		createGroups()
 		generateResponses()
 		calculateScore()
 		calculateMaxScore()
-		Materia.ScoreCore.setHeight $("#card-container").height()
 		$scope.$apply()
 
 	$scope.update = (qset, scoreTable) ->
 		$scope.qset = qset
 		$scope.scoreTable = scoreTable
 		generateResponses()
+		createGroups()
 		calculateScore()
 		calculateMaxScore()
 		ensureScoreInGraph() if graphData
-		Materia.ScoreCore.setHeight $("#card-container").height()
 		$scope.$apply()
 
 	$scope.handleScoreDistribution = (data) ->
@@ -67,6 +70,29 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 
 	$scope.cancel = () ->
 		$mdDialog.hide()
+
+	$scope.toggleQuestions = (groupIndex) ->
+		$('#group_' + groupIndex + ' .question-container').slideToggle()
+
+		button = $('#group_' + groupIndex + ' button')
+		if (button.text().includes('Show'))
+			button.text("Hide Questions")
+		else
+			button.text("Show Questions")
+
+	createGroups = () ->
+		$scope.groups = {}
+		$scope.groupSubscores = new Array($scope.qset.options.groups.length).fill(0)
+
+		for item, i in $scope.qset.items
+			group = item.options.group
+			$scope.groupSubscores[group] += ~~$scope.scoreTable[i].score
+			if $scope.groups[group]?
+				$scope.groups[group].push(i)
+			else
+				$scope.groups[group] = [i]
+
+		console.log $scope.groups
 
 	calculateScore = ->
 		total = 0

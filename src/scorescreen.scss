@@ -4,10 +4,6 @@
 	background-color: #F3F3F3;
 }
 
-.md-toolbar-tools h2 {
-	margin-left: 5px;
-}
-
 .card {
 	margin: 20px;
 
@@ -15,15 +11,6 @@
 		font-weight: bold;
 		font-size: 20px;
 	}
-}
-
-h1.md-headline {
-	position: relative;
-	z-index: 0;
-}
-
-.radio-spacing {
-	margin: 10px;
 }
 
 #score-card.card {
@@ -54,6 +41,22 @@ h1.md-headline {
 		#score-value {
 			font-size: 60px;
 		}
+	}
+
+}
+
+.group-card {
+	.group-header,
+	button {
+		color: white;
+		text-shadow: 1px 1px 1px black;
+		justify-content: space-between;
+	}
+
+	.question-container {
+		color: black;
+		text-shadow: none;
+		display: none;
 	}
 
 }

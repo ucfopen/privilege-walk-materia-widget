@@ -132,8 +132,8 @@
 }
 
 .color-bar {
-	width: 70px;
-	height: 25px;
+	width: 140px;
+	height: 30px;
 	border-radius: 2px;
 	margin-right: auto;
 	margin-left: auto;
@@ -150,18 +150,21 @@
 		}
 	}
 }
+.md-dialog-content {
+	width: 475px;
 
-#groupsForm {
-	padding-left: 5px;
-	margin-bottom: 3px;
+	#groupsForm {
+		padding-left: 5px;
+		margin-bottom: 3px;
 
-	// remove extra spacing from input error handler
-	.md-errors-spacer:empty { display: none; }
-	.remove-group i {
-		margin-top: 10px;
+		// remove extra spacing from input error handler
+		.md-errors-spacer:empty { display: none; }
+		.remove-group i {
+			margin-top: 10px;
+		}
 	}
-}
 
-.remove-group {
-	min-width: 30px;
+	.remove-group {
+		min-width: 30px;
+	}
 }

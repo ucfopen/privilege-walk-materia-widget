@@ -23,7 +23,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog
 
 	# 700 colors from material-ui
 	# TODO track which colors are being used
-	$scope.colors = ['#D32F2F', '#C2185B', '#7B1FA2', '#512DA8', '#303F9F', '#1976D2', '#0288D1', '#0097A7', '#00796B', '#388E3C', '#689F38', '#E64A19', '#5D4037', '#455A64', '#616161']
+	$scope.colors = ['#C2185B', '#D32F2F', '#E64A19', '#689F38', '#00796B', '#0097A7', '#0288D1', '#303F9F', '#7B1FA2', '#455A64', '#616161', '#5D4037']
 
 	$scope.rangeOptions = [
 		{text:'Very Often', value: 5}
@@ -80,7 +80,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog
 					answers: item.answers
 					style: item.options.style
 					reversed: item.options.reversed == 'true'
-					group = item.options.group
+					group: item.options.group
 				questionCount++
 			$scope.ready = true
 			console.log "should be ready"
