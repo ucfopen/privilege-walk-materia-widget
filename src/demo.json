@@ -11,7 +11,8 @@
 					"options": {
 						"questionType": "1",
 						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "0"
 					},
 					"questions": [
 						{
@@ -53,7 +54,8 @@
 					"options": {
 						"questionType": "1",
 						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "0"
 					},
 					"questions": [
 						{
@@ -95,7 +97,8 @@
 					"options": {
 						"questionType": "2",
 						"style": "1",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "1"
 					},
 					"questions": [
 						{
@@ -104,83 +107,78 @@
 					],
 					"answers": [
 						{
-							"text": "Androphilic",
-							"value": 1,
+							"text": "Androphillic",
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Asexual",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Bisexual",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Demi-sexuality",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Fluid",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Gay",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Gay-asexuality",
-							"value": 1,
-							"id": ""
-						},
-						{
-							"text": "Gynephilic",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Heterosexual",
-							"value": 5,
+							"value": 1,
 							"id": ""
 						},
 						{
 							"text": "Homosexual",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Lesbian",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Other",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Pansexual",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Polysexual",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Queer",
-							"value": 1,
+							"value": 5,
 							"id": ""
 						},
 						{
 							"text": "Straight",
-							"value": 5,
+							"value": 1,
 							"id": ""
 						}
 					]
@@ -192,7 +190,8 @@
 					"options": {
 						"questionType": "0",
 						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "2"
 					},
 					"questions": [
 						{
@@ -219,7 +218,8 @@
 					"options": {
 						"questionType": "1",
 						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "2"
 					},
 					"questions": [
 						{
@@ -259,9 +259,10 @@
 					"id": null,
 					"type": "QA",
 					"options": {
-						"questionType": "0",
+						"questionType": "1",
 						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "2"
 					},
 					"questions": [
 						{
@@ -270,12 +271,27 @@
 					],
 					"answers": [
 						{
-							"text": "Yes",
+							"text": "Very Often",
 							"value": 5,
 							"id": ""
 						},
 						{
-							"text": "No",
+							"text": "Often",
+							"value": 4,
+							"id": ""
+						},
+						{
+							"text": "Sometimes",
+							"value": 3,
+							"id": ""
+						},
+						{
+							"text": "Rarely",
+							"value": 2,
+							"id": ""
+						},
+						{
+							"text": "Never",
 							"value": 1,
 							"id": ""
 						}
@@ -288,7 +304,8 @@
 					"options": {
 						"questionType": "2",
 						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "2"
 					},
 					"questions": [
 						{
@@ -330,7 +347,8 @@
 					"options": {
 						"questionType": "1",
 						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "2"
 					},
 					"questions": [
 						{
@@ -372,7 +390,8 @@
 					"options": {
 						"questionType": "0",
 						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "2"
 					},
 					"questions": [
 						{
@@ -399,49 +418,8 @@
 					"options": {
 						"questionType": "1",
 						"style": "0",
-						"reversed": "false"
-					},
-					"questions": [
-						{
-							"text": "How often have you been shamed for your religious beliefs?"
-						}
-					],
-					"answers": [
-						{
-							"text": "Very Often",
-							"value": 5,
-							"id": ""
-						},
-						{
-							"text": "Often",
-							"value": 4,
-							"id": ""
-						},
-						{
-							"text": "Sometimes",
-							"value": 3,
-							"id": ""
-						},
-						{
-							"text": "Rarely",
-							"value": 2,
-							"id": ""
-						},
-						{
-							"text": "Never",
-							"value": 1,
-							"id": ""
-						}
-					]
-				},
-				{
-					"materiaType": "question",
-					"id": null,
-					"type": "QA",
-					"options": {
-						"questionType": "1",
-						"style": "0",
-						"reversed": "false"
+						"reversed": "false",
+						"group": "1"
 					},
 					"questions": [
 						{
@@ -476,7 +454,23 @@
 						}
 					]
 				}
-			]
+			],
+			"options": {
+				"groups": [
+					{
+						"text": "Race",
+						"color": "#5D4037"
+					},
+					{
+						"text": "Sexual Orientation",
+						"color": "#C2185B"
+					},
+					{
+						"text": "Financial",
+						"color": "#689F38"
+					}
+				]
+			}
 		}
 	}
 }
