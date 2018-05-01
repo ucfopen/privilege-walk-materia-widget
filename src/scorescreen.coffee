@@ -17,7 +17,7 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 	$scope.isPreview = false
 
 	graphData = null
-	maxScore = null
+	$scope.maxScore = null
 	$scope.distributionReady = false
 	$scope.invalidGraph = false
 
@@ -142,7 +142,7 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 						xAxes: [
 							ticks:
 								min: 0
-								max: maxScore
+								max: $scope.maxScore
 							scaleLabel:
 								display: true
 								labelString: 'Privilege Score'
@@ -169,7 +169,7 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 			for answer in item.answers
 				bestAnswer = Math.max(bestAnswer, answer.value)
 			max += bestAnswer
-		maxScore = max
+		$scope.maxScore = max
 
 
 	Materia.ScoreCore.hideScoresOverview()

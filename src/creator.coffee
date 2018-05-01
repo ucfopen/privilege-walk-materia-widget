@@ -179,7 +179,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog
 	$scope.showTypeDialog = (ev, questionType) ->
 		$scope.dialogText = reversedTooltips[questionType]
 		$mdDialog.show(
-			contentElement: '#dialog-container'
+			contentElement: '#info-dialog-container'
 			parent: angular.element(document.body)
 			targetEvent: ev
 			clickOutsideToClose: true

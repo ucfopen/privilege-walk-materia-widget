@@ -53,6 +53,15 @@
 		justify-content: space-between;
 	}
 
+	.group-header h2 {
+		margin: 0;
+	}
+
+	button {
+		margin: -10px auto 6px;
+		position: relative;
+	}
+
 	.question-container {
 		color: black;
 		text-shadow: none;
@@ -63,10 +72,14 @@
 
 #distribution-dialog {
 	position: relative;
-	top: calc(-50% + 350px);
+	top: calc(-50% + 300px);
 
 	#compare-loading {
 		margin: 0 auto;
+	}
+
+	.md-dialog-content {
+		padding: 16px;
 	}
 
 	.chart-container {
