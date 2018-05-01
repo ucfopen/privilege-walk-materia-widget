@@ -22,31 +22,25 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 	$scope.invalidGraph = false
 
 	$scope.start = (instance, qset, scoreTable, isPreview, version = '1') ->
-		console.log qset
-		console.log scoreTable
-		console.log "isPreview: ", isPreview
 		$scope.instance = instance
-		$scope.qset = qset
-		$scope.scoreTable = scoreTable
 		$scope.isPreview = isPreview
-		createGroups()
-		generateResponses()
-		calculateScore()
-		calculateMaxScore()
+		prepareScoreInfo(qset, scoreTable)
 		$scope.$apply()
 
 	$scope.update = (qset, scoreTable) ->
+		prepareScoreInfo(qset, scoreTable)
+		ensureScoreInGraph() if graphData
+		$scope.$apply()
+
+	prepareScoreInfo = (qset, scoreTable) ->
 		$scope.qset = qset
 		$scope.scoreTable = scoreTable
 		generateResponses()
 		createGroups()
 		calculateScore()
 		calculateMaxScore()
-		ensureScoreInGraph() if graphData
-		$scope.$apply()
 
 	$scope.handleScoreDistribution = (data) ->
-		console.log "got distribution data: ", data[..]
 		if data
 			graphData = data
 			ensureScoreInGraph()
@@ -92,8 +86,6 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 			else
 				$scope.groups[group] = [i]
 
-		console.log $scope.groups
-
 	calculateScore = ->
 		total = 0
 		for s in $scope.scoreTable
@@ -103,6 +95,8 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 		$scope.$apply()
 
 	drawGraph = () ->
+		# load chart.js when needed
+		# TODO graph should update when attempt number is changed
 		$LAB.script("https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js")
 		.wait ->
 			# set the bar colors
@@ -154,21 +148,30 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 		for score, i in $scope.scoreTable
 			$scope.responses[i] = score.data[1]
 
+	# the scorecore will just return a random sample of scores
+	# we need to make sure that the user's score is included in this group
 	ensureScoreInGraph = ->
+		# scores in graphData is sorted by the server
 		for score, i in graphData
 			return if score == $scope.score
+			# if the user's score is passed, replace the next one with it
 			if score < $scope.score
 				return graphData[i] = $scope.score
+
+		# if not found by the end, replace the last one with it
 		graphData.pop()
 		graphData.push $scope.score
 
+	# calculate the max score for the whole widget as well as group maxes
 	calculateMaxScore = ->
+		$scope.groupMaxscores = new Array($scope.qset.options.groups.length).fill(0)
 		max = 0
 		for item in $scope.qset.items
 			bestAnswer = 0
 			for answer in item.answers
 				bestAnswer = Math.max(bestAnswer, answer.value)
 			max += bestAnswer
+			$scope.groupMaxscores[item.options.group] += bestAnswer
 		$scope.maxScore = max
 
 

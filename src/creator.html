@@ -53,6 +53,7 @@
 						ng-repeat="(cardIndex, card) in cards"
 						layout="row">
 
+						<!-- Card Header -->
 						<div class="card-right" layout="column" flex>
 							<form name="questionForm">
 								<md-input-container class="md-block">
@@ -199,10 +200,6 @@
 							Add Question
 						</md-button>
 					</div>
-					<div layout layout-align="center center" ng-hide="ready">
-						<md-progress-linear md-mode="query"></md-progress-linear>
-					</div>
-
 				</div>
 			</div>
 
@@ -227,8 +224,8 @@
 							<div class="md-toolbar-tools">
 								<h2>Edit Groups</h2>
 								<span flex></span>
-								<md-button class="md-icon-button" ng-click="cancel()">
-									<i class="material-icons">&#xE5CD;</i>
+								<md-button ng-click="cancel()">
+									Done
 								</md-button>
 							</div>
 						</md-toolbar>

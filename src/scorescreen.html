@@ -57,7 +57,10 @@
 						style="background-color: {{qset.options.groups[groupNumber].color}}">
 						<md-card-content layout="row" class="group-header">
 							<h2>{{qset.options.groups[groupNumber].text}}</h2>
-							<h2>{{groupSubscores[groupNumber]}}</h2>
+							<span>
+								<h2 class="group-subscore">{{groupSubscores[groupNumber]}}</h2>
+								<p class="group-subscore">out of {{groupMaxscores[groupNumber]}}</p>
+							</span>
 						</md-card-content>
 						<div class="question-container">
 							<md-card class="md-whiteframe-3dp card" ng-repeat="questionIndex in group">

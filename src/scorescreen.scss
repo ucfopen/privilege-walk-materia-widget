@@ -53,8 +53,14 @@
 		justify-content: space-between;
 	}
 
-	.group-header h2 {
-		margin: 0;
+	.group-header {
+		h2 {
+			margin: 0;
+		}
+
+		.group-subscore {
+			display: inline;
+		}
 	}
 
 	button {
@@ -67,7 +73,6 @@
 		text-shadow: none;
 		display: none;
 	}
-
 }
 
 #distribution-dialog {

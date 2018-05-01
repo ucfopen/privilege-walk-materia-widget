@@ -83,12 +83,9 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog
 					group: item.options.group
 				questionCount++
 			$scope.ready = true
-			console.log "should be ready"
-			return
-		console.log "actually ready"
 
 	$scope.openColorMenu = ($mdMenu, ev, cardIndex) ->
-		originatorEv = ev;
+		originatorEv = ev; # saved for animations
 		$mdMenu.open(ev);
 
 	$scope.showEditGroups = (ev) ->
@@ -111,7 +108,7 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog
 		)
 
 	$scope.removeGroup = (index) ->
-		console.log "removing group at ", index
+		# TODO shouldn't be able to delete a used group
 		$scope.groups.splice index, 1
 
 	$scope.selectGroup = (cardIndex, groupIndex) ->
@@ -169,23 +166,21 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog
 		answers = $scope.cards[cardIndex].answers
 		reversedArray = []
 		for i in [0...answers.length]
-			reversedArray.push(
+			reversedArray.push
 				text: answers[i].text,
 				value: answers[answers.length-i-1].value
 				id: ''
-			)
 		$scope.cards[cardIndex].answers = reversedArray
 
 	$scope.showTypeDialog = (ev, questionType) ->
 		$scope.dialogText = reversedTooltips[questionType]
-		$mdDialog.show(
+		$mdDialog.show
 			contentElement: '#info-dialog-container'
 			parent: angular.element(document.body)
 			targetEvent: ev
 			clickOutsideToClose: true
 			openFrom: ev.currentTarget
 			closeTo: ev.currentTarget
-		)
 
 	$scope.cancel = () ->
 		$mdDialog.hide()
@@ -263,11 +258,10 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 		materiaType: "question"
 		id: null
 		type: 'QA'
-		options: {
+		options:
 			questionType: questionType
 			style: style
 			reversed: reversed
 			group: group
-		}
 		questions: [{ text: question }]
 		answers: item.answers
