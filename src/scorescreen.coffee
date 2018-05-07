@@ -21,6 +21,8 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 	$scope.distributionReady = false
 	$scope.invalidGraph = false
 
+	COMPARISON_RESULT_LIMIT = 30
+
 	$scope.start = (instance, qset, scoreTable, isPreview, version = '1') ->
 		$scope.instance = instance
 		$scope.isPreview = isPreview
@@ -43,6 +45,7 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 	$scope.handleScoreDistribution = (data) ->
 		if data
 			graphData = data
+			prepareData()
 			ensureScoreInGraph()
 			drawGraph()
 		else
@@ -147,6 +150,18 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 		$scope.responses = []
 		for score, i in $scope.scoreTable
 			$scope.responses[i] = score.data[1]
+
+	prepareData = ->
+		return unless graphData
+		if graphData.length > COMPARISON_RESULT_LIMIT
+			# randomize the full list of what we have
+			for val, index in graphData
+				position = Math.floor Math.random() * (index + 1)
+				temp = graphData[index]
+				graphData[index] = graphData[position]
+				graphData[position] = temp
+			# throw away anything past our upward limit
+			graphData = graphData.slice 0, COMPARISON_RESULT_LIMIT
 
 	# the scorecore will just return a random sample of scores
 	# we need to make sure that the user's score is included in this group
