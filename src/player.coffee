@@ -9,7 +9,7 @@ Widget: Privilege Walk
 
 PrivilegeWalk = angular.module 'PrivilegeWalkEngine', ['ngMaterial']
 
-PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
+PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ['$scope', '$mdToast', ($scope, $mdToast) ->
 	$scope.qset = null
 	$scope.instance = null
 	$scope.responses = []
@@ -69,3 +69,4 @@ PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ($scope, $mdToast) ->
 		return
 
 	Materia.Engine.start($scope)
+]

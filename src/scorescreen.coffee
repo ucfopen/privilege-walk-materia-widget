@@ -9,7 +9,7 @@ Widget: Privilege Walk
 
 PrivilegeWalk = angular.module 'PrivilegeWalkScorescreen', ['ngMaterial', 'ngMessages']
 
-PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog) ->
+PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ['$scope', '$mdToast', '$mdDialog', ($scope, $mdToast, $mdDialog) ->
 	$scope.qset = null
 	$scope.instance = null
 	$scope.groups = null
@@ -193,3 +193,4 @@ PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ($scope, $mdToast, $mdDialog)
 	Materia.ScoreCore.hideScoresOverview()
 	Materia.ScoreCore.hideResultsTable()
 	Materia.ScoreCore.start($scope)
+]

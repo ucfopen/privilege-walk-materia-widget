@@ -10,12 +10,12 @@ Widget: Privilege Walk
 # Create an angular module to house our controller
 PrivilegeWalk = angular.module 'PrivilegeWalkCreator', ['ngMaterial', 'ngMessages', 'ngSanitize', 'angular-sortable-view']
 
-PrivilegeWalk.config ($mdThemingProvider) ->
+PrivilegeWalk.config ['$mdThemingProvider', ($mdThemingProvider) ->
 		$mdThemingProvider.theme('toolbar-dark', 'default')
 			.primaryPalette('indigo')
 			.dark()
-
-PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog, $sanitize, $compile, Resource) ->
+]
+PrivilegeWalk.controller 'PrivilegeWalkController', [ '$scope','$mdToast','$mdDialog','$sanitize','$compile', 'Resource', ($scope, $mdToast, $mdDialog, $sanitize, $compile, Resource) ->
 
 	$scope.groups = [
 		{text:'General', color:'#616161'}
@@ -226,8 +226,9 @@ PrivilegeWalk.controller 'PrivilegeWalkController', ($scope, $mdToast, $mdDialog
 	$scope.onSaveComplete = (title, widget, qset, version) -> true
 
 	Materia.CreatorCore.start $scope
+]
 
-PrivilegeWalk.factory 'Resource', ($sanitize) ->
+PrivilegeWalk.factory 'Resource', ['$sanitize', ($sanitize) ->
 	buildQset: (title, questions, groups) ->
 		qsetItems = []
 		qset = {}
@@ -265,3 +266,4 @@ PrivilegeWalk.factory 'Resource', ($sanitize) ->
 			group: group
 		questions: [{ text: question }]
 		answers: item.answers
+]
