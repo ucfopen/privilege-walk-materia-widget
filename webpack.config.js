@@ -14,10 +14,10 @@ let webpackConfig = require('materia-widget-development-kit/webpack-widget').get
 	]
 })
 
-webpackConfig.entry['scoreScreen.js'] = [path.join(__dirname, 'src', 'scoreScreen.coffee')]
-webpackConfig.entry['scoreScreen.css'] = [
-	path.join(__dirname, 'src', 'scoreScreen.html'),
-	path.join(__dirname, 'src', 'scoreScreen.scss')
+webpackConfig.entry['scorescreen.js'] = [path.join(__dirname, 'src', 'scorescreen.coffee')]
+webpackConfig.entry['scorescreen.css'] = [
+	path.join(__dirname, 'src', 'scorescreen.html'),
+	path.join(__dirname, 'src', 'scorescreen.scss')
 ]
 
 module.exports = webpackConfig
