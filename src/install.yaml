@@ -25,8 +25,8 @@ meta_data:
   supported_data:
     - Custom
   about: >
-    Students answers questions that will determine
-    their amount of privilege.
+    Build a questionnaire for students that provides them with a privilege "score",
+    after which they can compare themselves to the rest of the course.
   excerpt: >
-    Students answers questions that will determine
-    their amount of privilege.
+    Build a questionnaire for students that provides them with a privilege "score",
+    after which they can compare themselves to the rest of the course.
