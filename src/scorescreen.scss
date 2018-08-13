@@ -18,7 +18,7 @@
 	margin: 20px auto;
 	background-color: #6158ff;
 	color: white;
-	text-shadow: 1px 1px 1px black;
+	// text-shadow: 1px 1px 1px black;
 	text-align: center;
 
 	.card-center {
@@ -48,8 +48,8 @@
 .group-card {
 	.group-header,
 	button {
-		color: white;
-		text-shadow: 1px 1px 1px black;
+		color: #000000;
+		text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
 		justify-content: space-between;
 	}
 
