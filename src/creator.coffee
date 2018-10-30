@@ -1,12 +1,3 @@
-###
-
-Materia
-It's a thing
-
-Widget: Privilege Walk
-
-###
-
 # Create an angular module to house our controller
 PrivilegeWalk = angular.module 'PrivilegeWalkCreator', ['ngMaterial', 'ngMessages', 'ngSanitize', 'angular-sortable-view']
 

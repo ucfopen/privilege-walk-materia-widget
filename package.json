@@ -3,14 +3,20 @@
   "materia": {
     "cleanName": "privilege-walk"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "scripts": {
     "start": "webpack-dev-server",
     "build-dev": "webpack",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "test": "echo 'no tests implemented'",
+    "test-ci": "echo 'no tests implemented'"
   },
-  "devDependencies": {
-    "materia-widget-development-kit": "v1.2.2"
+  "dependencies": {
+    "angular-sortable-view": "^0.0.13",
+    "materia-widget-development-kit": "^2.0.0"
   },
+  "author": "University of Central Florida, Center for Distributed Learning",
+  "description": "Privilege Walk is a Materia Widget that asks students several questions and assigns them a score that indicates the amount of privilege they have in their own life.",
   "license": "AGPL-3.0"
 }
+
