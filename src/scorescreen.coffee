@@ -1,12 +1,3 @@
-###
-
-Materia
-It's a thing
-
-Widget: Privilege Walk
-
-###
-
 PrivilegeWalk = angular.module 'PrivilegeWalkScorescreen', ['ngMaterial', 'ngMessages']
 
 PrivilegeWalk.controller 'PrivilegeWalkScoreCtrl', ['$scope', '$mdToast', '$mdDialog', ($scope, $mdToast, $mdDialog) ->

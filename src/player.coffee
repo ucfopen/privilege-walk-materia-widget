@@ -1,12 +1,3 @@
-###
-
-Materia
-It's a thing
-
-Widget: Privilege Walk
-
-###
-
 PrivilegeWalk = angular.module 'PrivilegeWalkEngine', ['ngMaterial']
 
 PrivilegeWalk.controller 'PrivilegeWalkEngineCtrl', ['$scope', '$mdToast', ($scope, $mdToast) ->
