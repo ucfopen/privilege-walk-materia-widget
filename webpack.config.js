@@ -12,6 +12,11 @@ const customCopy = copy.concat([
 	{
 		from: path.join(__dirname, 'node_modules', 'angular-sortable-view', 'src', 'angular-sortable-view.min.js'),
 		to: path.join(outputPath, 'vendor'),
+	},
+	{
+		from: path.join(__dirname, 'src','_guides','assets'),
+		to: path.join(__dirname, 'build','guides','assets'),
+		toType: 'dir'
 	}
 ])
 
@@ -22,6 +27,13 @@ entries['scorescreen.js'] = [
 entries['scorescreen.css'] = [
 	srcPath+'scorescreen.html',
 	srcPath+'scorescreen.scss'
+]
+
+entries['guides/creator.temp.html'] = [
+	srcPath+'_guides/creator.md'
+]
+entries['guides/player.temp.html'] = [
+	srcPath+'_guides/player.md'
 ]
 
 // this is needed to prevent html-loader from causing issues with
@@ -57,6 +69,7 @@ let customRules = [
 	customHTMLAndReplaceRule, // <--- replaces "rules.loadHTMLAndReplaceMateriaScripts"
 	rules.loadAndPrefixCSS,
 	rules.loadAndPrefixSASS,
+	rules.loadAndCompileMarkdown
 ]
 
 
