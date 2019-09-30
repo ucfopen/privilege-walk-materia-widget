@@ -9,7 +9,7 @@ PrivilegeWalk.config ['$mdThemingProvider', ($mdThemingProvider) ->
 PrivilegeWalk.controller 'PrivilegeWalkController', [ '$scope','$mdToast','$mdDialog','$sanitize','$compile', 'Resource', ($scope, $mdToast, $mdDialog, $sanitize, $compile, Resource) ->
 
 	$scope.groups = [
-		{text:'General', color:'#616161'}
+		{text:'General', color:'#C2185B'}
 	]
 
 	# 700 colors from material-ui
