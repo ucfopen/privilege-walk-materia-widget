@@ -4,7 +4,7 @@ general:
   group: Materia
   height: 600
   width: 800
-  in_catalog: No
+  in_catalog: Yes
   is_editable: Yes
   is_playable: Yes
   is_qset_encrypted: Yes
@@ -32,3 +32,5 @@ meta_data:
   excerpt: >
     Build a questionnaire for students that provides them with a privilege "score",
     after which they can compare themselves to the rest of the course.
+  update_method: github
+  repo: ucfopen/privilege-walk-materia-widget
