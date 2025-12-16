@@ -8,3 +8,6 @@ class PrivilegeWalk(ScoreModule):
                 return answer["value"]
 
         return 0
+
+    def calculate_score(self):
+        self.calculated_percent = 100
